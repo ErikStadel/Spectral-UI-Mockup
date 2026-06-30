@@ -120,14 +120,16 @@
 
             </div>
         </aside>
-
+        <!-- In Regler -->
         <div class="w-12 border-r border-zinc-800 bg-zinc-900/70 p-1.5 flex flex-col items-center justify-between shrink-0">
             <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">In</span>
-            <div class="w-3 flex-1 my-2 bg-zinc-800 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
-                <div class="w-full h-[65%] bg-gradient-to-t from-audio-tonal to-cyan-300 rounded-full opacity-85"></div>
+            
+            <div class="w-3 flex-1 my-2 bg-zinc-950 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
+                <div class="w-full h-[65%] bg-gradient-to-t from-[#6A00A8] via-[#FF2A00] to-[#FFC400] rounded-full opacity-90 shadow-[0_0_8px_rgba(255,42,0,0.2)]"></div>
             </div>
-            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
-                <div class="w-1 h-3 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom"></div>
+            
+            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
+                <div class="w-0.5 h-2.5 bg-[#FF2A00] absolute top-0.5 rounded-full origin-bottom shadow-[0_0_4px_rgba(255,42,0,0.6)]"></div>
             </div>
         </div>
 
@@ -142,7 +144,7 @@
                 
                 <div class="absolute bottom-3 right-3 bg-zinc-800/90 border border-zinc-700 px-2 py-1.5 rounded shadow-lg flex items-center gap-2 backdrop-blur">
                     <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">View Gain</span>
-                    <input type="range" class="w-16 h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-audio-tonal shadow-slot">
+                    <input type="range" class="w-16 h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-audio-mod shadow-slot">
                 </div>
             </div>
 
@@ -168,14 +170,16 @@
                 </div>
             </div>
         </div>
-
-        <div class="w-12 border-l border-zinc-800 bg-zinc-900/70 p-1.5 flex flex-col items-center justify-between shrink-0">
-            <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">Out</span>
-            <div class="w-3 flex-1 my-2 bg-zinc-800 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
-                <div class="w-full h-[55%] bg-gradient-to-t from-audio-tonal via-emerald-400 to-amber-400 rounded-full opacity-85"></div>
+         <!-- Out Regler -->
+        <div class="w-12 border-r border-zinc-800 bg-zinc-900/70 p-1.5 flex flex-col items-center justify-between shrink-0">
+            <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">In</span>
+            
+            <div class="w-3 flex-1 my-2 bg-zinc-950 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
+                <div class="w-full h-[65%] bg-gradient-to-t from-[#6A00A8] via-[#FF2A00] to-[#FFC400] rounded-full opacity-90 shadow-[0_0_8px_rgba(255,42,0,0.2)]"></div>
             </div>
-            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
-                <div class="w-1 h-3 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom"></div>
+            
+            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
+                <div class="w-0.5 h-2.5 bg-[#FF2A00] absolute top-0.5 rounded-full origin-bottom shadow-[0_0_4px_rgba(255,42,0,0.6)]"></div>
             </div>
         </div>
     </div>
@@ -281,11 +285,12 @@
                 </div>
             </div>
 
+            <!-- Effektmodul: Spectral Delay -->
             <div class="w-44 h-full bg-zinc-800/60 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit border-l-2 border-l-emerald-500">
                 <div class="h-6 bg-emerald-950/30 border-b border-zinc-800/70 px-2 flex items-center justify-between rounded-t-lg">
                     <div class="flex items-center gap-1.5">
                         <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
-                <!-- Effektmodul: Spectral Delay -->
+                
                         <span class="text-[10px] font-bold tracking-wider uppercase text-emerald-400">Spectral Delay</span>
                     </div>
                     <div class="flex items-center gap-1.5 text-[9px]">
@@ -312,27 +317,29 @@
                 </div>
             </div>
 
-            <div class="w-44 h-full bg-zinc-800/60 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit border-l-2 border-l-zinc-500">
-                <div class="h-6 bg-zinc-900/40 border-b border-zinc-800/70 px-2 flex items-center justify-between rounded-t-lg">
+            <!-- Effektmodul: Space Blur -->
+            <div class="w-44 h-full bg-zinc-800/60 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit border-l-2 border-l-sky-500">
+                <div class="h-6 bg-sky-950/20 border-b border-zinc-800/70 px-2 flex items-center justify-between rounded-t-lg">
                     <div class="flex items-center gap-1.5">
-                        <div class="w-1.5 h-1.5 rounded-full bg-zinc-400"></div>
-                <!-- Effektmodul: Space Blur -->
-                        <span class="text-[10px] font-bold tracking-wider uppercase text-zinc-300">Space Blur</span>
+                        <div class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_4px_rgba(56,189,248,0.6)]"></div>
+                        <span class="text-[10px] font-bold tracking-wider uppercase text-sky-400">Space Blur</span>
                     </div>
                     <span class="text-zinc-500 hover:text-red-400 cursor-pointer text-[9px]">✕</span>
                 </div>
+                
                 <div class="flex-1 flex items-center justify-around p-2">
                     <div class="flex flex-col items-center">
                         <div class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
+                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
                                 <div class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-[-20deg]"></div>
                             </div>
                         </div>
                         <span class="text-[9px] text-zinc-400 mt-1">Size</span>
                     </div>
+                    
                     <div class="flex flex-col items-center">
                         <div class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
+                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
                                 <div class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-90"></div>
                             </div>
                         </div>
