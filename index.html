@@ -187,21 +187,20 @@
 
     <footer class="h-60 border-t border-zinc-800 bg-zinc-900 flex shrink-0 backdrop-blur">
         <!-- Modulation Hub -->
-        <div class="w-80 border-r border-zinc-800 p-3 bg-zinc-800/50 flex flex-col shrink-0">
-            <div class="flex items-center justify-between pb-1.5 border-b border-zinc-800 mb-2">
+        <div class="w-80 border-r border-zinc-800 p-3 bg-zinc-800/50 flex flex-col shrink-0 justify-between">
+            <div class="flex items-center justify-between pb-1.5 border-b border-zinc-800 mb-1.5">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-audio-mod">Modulation Hub</span>
                 <select id="mod-hub-selector" class="bg-zinc-900 text-[10px] px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-300 font-mono shadow-slot cursor-pointer">
                     <option value="LFO1">LFO 1</option>
                     <option value="LFO2">LFO 2</option>
                     <option value="LFO3">LFO 3</option>
-                    <option value="XY1">XY 1</option>
-                    <option value="XY2">XY 2</option>
+                    <option value="XY1" selected>XY 1</option> <option value="XY2">XY 2</option>
                     <option value="XY3">XY 3</option>
                 </select>
             </div>
             
-            <div id="mod-hub-lfo-content" class="flex flex-col flex-1">
-                <div class="h-20 bg-zinc-900 shadow-slot rounded border border-zinc-700/70 p-1 mb-2.5 flex items-center justify-center relative overflow-hidden">
+            <div id="mod-hub-lfo-content" class="hidden flex-1 flex flex-col justify-between">
+                <div class="h-20 bg-zinc-900 shadow-slot rounded border border-zinc-700/70 p-1 mb-2 flex items-center justify-center relative overflow-hidden">
                     <svg class="w-full h-full stroke-audio-mod fill-none opacity-80" viewBox="0 0 100 40">
                         <path d="M 0 20 C 25 0, 25 40, 50 20 C 75 0, 75 40, 100 20" stroke-width="1.2"/>
                     </svg>
@@ -230,9 +229,17 @@
                 </div>
             </div>
 
-            <div id="mod-hub-xy-content" class="hidden flex flex-col flex-1">
-                <div class="h-20 bg-zinc-950/60 shadow-slot rounded border border-zinc-700/70 p-1 mb-2.5 relative overflow-hidden flex items-center justify-center">
-                    <div class="absolute inset-0 grid grid-cols-4 grid-rows-2 pointer-events-none opacity-10">
+            <div id="mod-hub-xy-content" class="flex-1 flex flex-col justify-between">
+                <div class="w-32 h-32 mx-auto bg-zinc-950/60 shadow-slot rounded border border-zinc-700/70 p-1 mb-2 relative overflow-hidden flex items-center justify-center shrink-0">
+                    <div class="absolute inset-0 grid grid-cols-4 grid-rows-4 pointer-events-none opacity-10">
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-zinc-400 border-dashed"></div>
                         <div class="border-b border-r border-zinc-400 border-dashed"></div>
                         <div class="border-b border-r border-zinc-400 border-dashed"></div>
                         <div class="border-b border-r border-zinc-400 border-dashed"></div>
@@ -240,6 +247,7 @@
                         <div class="border-r border-zinc-400 border-dashed"></div>
                         <div class="border-r border-zinc-400 border-dashed"></div>
                         <div class="border-r border-zinc-400 border-dashed"></div>
+                        <div></div>
                     </div>
                     <div class="absolute w-full h-[1px] bg-zinc-800/80 top-1/2 left-0"></div>
                     <div class="absolute h-full w-[1px] bg-zinc-800/80 left-1/2 top-0"></div>
@@ -250,7 +258,7 @@
                     <span class="absolute bottom-1 right-1.5 text-[7px] font-mono text-zinc-600 uppercase tracking-widest">X / Y</span>
                 </div>
 
-                <div class="space-y-2 text-[10px]">
+                <div class="space-y-1.5 text-[10px]">
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="text-[8px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination X</label>
@@ -281,7 +289,10 @@
                 document.getElementById('mod-hub-lfo-content').classList.toggle('hidden', isXY);
                 document.getElementById('mod-hub-xy-content').classList.toggle('hidden', !isXY);
             });
+            // Initialer Trigger beim Laden, um die Standardauswahl (XY 1) direkt zu forcieren
+            document.getElementById('mod-hub-selector').dispatchEvent(new Event('change'));
         </script>
+
         </div>
 
         <div class="flex-1 flex gap-2 p-2 overflow-x-auto no-scrollbar bg-zinc-900" id="fx-rack-lane">
