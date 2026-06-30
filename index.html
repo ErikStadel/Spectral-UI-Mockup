@@ -74,7 +74,7 @@
             
             <div class="flex-1 overflow-y-auto p-3 space-y-2.5">
                 
-                <div class="p-3 rounded-lg bg-zinc-900/80 border border-zinc-850 shadow-lg flex flex-col gap-2.5 ring-1 ring-audio-mod/30">
+                <div class="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800 shadow-lg flex flex-col gap-2.5 ring-1 ring-audio-mod/30">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <div class="w-2 h-2 rounded-full bg-audio-transient animate-pulse"></div>
@@ -182,23 +182,47 @@
     </div>
 
     <footer class="h-60 border-t border-zinc-900 bg-zinc-950 flex shrink-0 backdrop-blur">
-        
+        <!-- Modulation Hub -->
         <div class="w-80 border-r border-zinc-900 p-3 bg-zinc-900/20 flex flex-col shrink-0">
             <div class="flex items-center justify-between pb-1.5 border-b border-zinc-900 mb-2">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-audio-mod">Modulation Hub</span>
-                <select class="bg-zinc-950 text-[10px] px-1.5 py-0.5 rounded border border-zinc-800 text-zinc-400 font-mono">
+                <select class="bg-zinc-950 text-[10px] px-1.5 py-0.5 rounded border border-zinc-800 text-zinc-400 font-mono shadow-slot cursor-pointer">
                     <option>LFO 1</option>
+                    <option>LFO 2</option>
+                    <option>LFO 3</option>
+                    <option>XY 1</option>
+                    <option>XY 2</option>
+                    <option>XY 3</option>
                 </select>
             </div>
-            <div class="flex-1 bg-zinc-950 shadow-slot rounded border border-zinc-900/60 p-1 mb-2 flex items-center justify-center">
-                    <!-- SVG-Kurve repräsentiert Keyframe-Automation -->
+            
+            <div class="h-20 bg-zinc-950 shadow-slot rounded border border-zinc-900/60 p-1 mb-2.5 flex items-center justify-center relative overflow-hidden">
                 <svg class="w-full h-full stroke-audio-mod fill-none opacity-70" viewBox="0 0 100 40">
                     <path d="M 0 20 C 25 0, 25 40, 50 20 C 75 0, 75 40, 100 20" stroke-width="1.2"/>
                 </svg>
             </div>
-            <div class="grid grid-cols-2 gap-2 text-[10px]">
-                <input type="range" class="w-full h-1 bg-zinc-900 accent-audio-mod appearance-none rounded-full shadow-slot">
-                <select class="w-full bg-zinc-950 text-[9px] px-1 py-0.5 rounded border border-zinc-800 text-zinc-400"><option>Target -> Density</option></select>
+            
+            <div class="space-y-2 text-[10px]">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-zinc-500 block mb-0.5 font-medium">Amount</label>
+                        <input type="range" class="w-full h-1 bg-zinc-900 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
+                    </div>
+                    <div>
+                        <label class="text-zinc-500 block mb-0.5 font-medium">Offset</label>
+                        <input type="range" class="w-full h-1 bg-zinc-900 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="text-[9px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination</label>
+                    <select class="w-full bg-zinc-950 text-[10px] px-2 py-1 rounded border border-zinc-800 text-zinc-300 shadow-slot cursor-pointer">
+                        <option>Target -> Base -> Density</option>
+                        <option>Target -> Base -> Brightness</option>
+                        <option>Target -> Base -> Gain</option>
+                        <option>Target -> Base -> Pitch</option>
+                    </select>
+                </div>
             </div>
         </div>
 
