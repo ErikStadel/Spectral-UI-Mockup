@@ -84,6 +84,26 @@
                         </div>
                     </div>
                 </div>
+                              <div class="p-3 rounded-lg bg-zinc-900/40 border border-zinc-900/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-audio-tonal"></div>
+                            <span class="text-xs font-bold text-zinc-400">Tonal Bed</span>
+                        </div>
+                        <span class="text-[9px] font-mono text-zinc-600">ID: #02</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="flex gap-1">
+                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-800 bg-zinc-900 text-zinc-500 shadow-knob">Eng</button>
+                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-800 bg-zinc-900 text-zinc-500 shadow-knob">Rec</button>
+                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-800 bg-zinc-900 text-zinc-500 shadow-knob">FX</button>
+                        </div>
+                        <div class="flex gap-1">
+                            <button class="w-6 h-5 bg-zinc-950 shadow-slot rounded text-[10px] font-bold text-zinc-500">S</button>
+                            <button class="w-6 h-5 bg-zinc-950 shadow-slot rounded text-[10px] font-bold text-zinc-500">M</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </aside>
 
@@ -97,9 +117,18 @@
             </div>
         </div>
 
-        <div class="flex-1 bg-zinc-950 flex flex-col min-w-0">
+                <div class="flex-1 bg-zinc-950 flex flex-col min-w-0">
+            
             <div class="flex-1 bg-zinc-900/10 rounded-t-lg mx-2 mt-2 border-t border-x border-zinc-900/80 relative overflow-hidden flex items-center justify-center shadow-slot">
+                <div class="absolute inset-0 grid grid-cols-8 grid-rows-4 pointer-events-none opacity-5">
+                    <div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div>
+                </div>
                 <span class="text-zinc-700 text-xs tracking-widest uppercase font-mono">Spectral Frame Buffer Canvas</span>
+                
+                <div class="absolute bottom-3 right-3 bg-zinc-900/90 border border-zinc-800 px-2 py-1.5 rounded shadow-lg flex items-center gap-2 backdrop-blur">
+                    <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">View Gain</span>
+                    <input type="range" class="w-16 h-1 bg-zinc-950 rounded-lg appearance-none cursor-pointer accent-audio-tonal shadow-slot">
+                </div>
             </div>
 
             <div class="h-28 bg-zinc-900/40 border-t border-b border-zinc-900/90 mx-2 mb-2 rounded-b-lg flex flex-col relative overflow-hidden shadow-slot">
