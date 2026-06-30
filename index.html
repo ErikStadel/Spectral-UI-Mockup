@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="de" class="h-full bg-zinc-950 text-zinc-100">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spectral Processor Mockup</title>
+    <title>Spectral Processor - Pro Mockup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,69 +14,251 @@
                         audio: {
                             transient: '#FF5252',
                             tonal: '#4AA3FF',
-                            noise: '#4FD16A'
+                            noise: '#4FD16A',
+                            mod: '#E0A96D' // Warm Amber für Modulationen
                         }
+                    },
+                    boxShadow: {
+                        // Custom Dark Neumorphism Shadows
+                        'knob': '0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -1px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+                        'slot': 'inset 2px 2px 5px rgba(0,0,0,0.7), inset -1px -1px 2px rgba(255,255,255,0.02)'
                     }
                 }
             }
         }
     </script>
-</head>
-<body class="h-full flex flex-col font-sans select-none overflow-hidden">
+    <style>
+        /* Feintuning für sanfte Audio-Gradients */
+        .bg-vst-surface {
+            background: linear-gradient(to bottom, #18181b, #09090b);
+        }
 
-    <header class="h-12 border-b border-zinc-800 bg-zinc-900 flex items-center justify-between px-4 shrink-0">
-        <div class="flex items-center gap-4">
-            <span class="font-bold tracking-wider text-sm text-zinc-400">SPEKTRAL // LAB</span>
-            <div class="bg-zinc-800 px-3 py-1 text-xs rounded border border-zinc-700 cursor-pointer hover:bg-zinc-750">
+        .knob-gradient {
+            background: linear-gradient(135deg, #3f3f46 0%, #18181b 100%);
+        }
+    </style>
+</head>
+
+<body class="h-full flex flex-col font-sans select-none overflow-hidden bg-zinc-950">
+
+    <header
+        class="h-12 border-b border-zinc-900 bg-zinc-900/80 flex items-center justify-between px-4 shrink-0 backdrop-blur">
+        <div class="flex items-center gap-6">
+            <span
+                class="font-black tracking-widest text-sm bg-clip-text text-transparent bg-gradient-to-r from-zinc-200 to-zinc-500">SPEKTRAL
+                // LAB</span>
+            <div
+                class="bg-zinc-950 shadow-slot px-3 py-1 text-xs rounded border border-zinc-800 cursor-pointer hover:border-zinc-700 text-zinc-300">
                 Default Preset ▾
             </div>
         </div>
-        <div class="flex items-center gap-6 text-xs text-zinc-400">
-            <div>In: <span class="text-zinc-200">-1.2 dB</span></div>
-            <div>Out: <span class="text-zinc-200">-0.8 dB</span></div>
+        <div class="flex items-center gap-4 text-xs font-mono text-zinc-500">
+            <div>CPU: <span class="text-audio-noise">2.4%</span></div>
+            <div class="h-4 w-[1px] bg-zinc-800"></div>
+            <div>Bypass: <span class="text-zinc-400 cursor-pointer hover:text-red-400">OFF</span></div>
         </div>
     </header>
 
     <div class="flex flex-1 min-h-0">
-        
-        <aside class="w-64 border-r border-zinc-800 bg-zinc-900/50 flex flex-col shrink-0">
-            <div class="p-3 border-b border-zinc-800 flex items-center justify-between">
-                <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Objekt-Datenbank</span>
-                <button id="add-object-btn" class="w-6 h-6 bg-zinc-800 border border-zinc-750 rounded flex items-center justify-center text-sm font-bold hover:bg-zinc-700 hover:border-zinc-600 transition-colors">
-                    +
-                </button>
+
+        <aside class="w-64 border-r border-zinc-900 bg-zinc-900/30 flex flex-col shrink-0">
+            <div class="p-3 border-b border-zinc-900 flex items-center justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Objekt-Datenbank</span>
+                <div class="flex gap-1">
+                    <button id="auto-detect-btn"
+                        class="px-2 h-6 bg-zinc-800/80 hover:bg-zinc-700 shadow-knob border border-zinc-700 text-[10px] font-semibold rounded text-zinc-300 transition-all active:scale-95">
+                        Auto-Detect
+                    </button>
+                    <button id="add-object-btn"
+                        class="w-6 h-6 bg-zinc-800/80 hover:bg-zinc-700 shadow-knob border border-zinc-700 rounded flex items-center justify-center text-xs font-bold text-zinc-300 transition-all active:scale-95">
+                        +
+                    </button>
+                </div>
             </div>
-            
-            <div class="flex-1 overflow-y-auto p-2 space-y-1" id="object-list">
-                <div class="p-2 rounded bg-zinc-800 border-l-4 border-audio-transient flex items-center justify-between cursor-pointer">
-                    <span class="text-xs font-medium">Transients</span>
-                    <div class="flex gap-2 text-[10px] text-zinc-500">
-                        <span class="hover:text-zinc-200">S</span>
-                        <span class="hover:text-zinc-200">M</span>
+
+            <div class="flex-1 overflow-y-auto p-2 space-y-1.5" id="object-list">
+                <div
+                    class="p-2.5 rounded bg-zinc-900/60 border-l-4 border-audio-transient shadow-md flex items-center justify-between cursor-pointer border border-zinc-800/50">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-semibold text-zinc-200">Transients</span>
+                        <span class="text-[9px] text-zinc-500 font-mono">Bins: 0-1024 (Dyn)</span>
+                    </div>
+                    <div class="flex gap-1.5 text-[10px] font-bold">
+                        <span
+                            class="w-5 h-5 bg-zinc-950 shadow-slot rounded flex items-center justify-center text-zinc-500 hover:text-audio-tonal">S</span>
+                        <span
+                            class="w-5 h-5 bg-zinc-950 shadow-slot rounded flex items-center justify-center text-zinc-500 hover:text-audio-transient">M</span>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 bg-zinc-950 p-4 flex flex-col relative min-w-0">
-            <div class="flex-1 bg-zinc-900/30 border border-zinc-800 rounded flex items-center justify-center relative overflow-hidden">
-                <span class="text-zinc-600 text-xs tracking-widest uppercase">Spektrogramm-Ansicht (STFT)</span>
-                
-                <div class="absolute border border-dashed border-sky-400 bg-sky-500/10 pointer-events-none rounded hidden" id="selection-overlay"></div>
+        <div
+            class="w-12 border-r border-zinc-900 bg-zinc-950/40 p-1.5 flex flex-col items-center justify-between shrink-0">
+            <span class="text-[9px] font-bold text-zinc-600 uppercase tracking-wider">In</span>
+            <div
+                class="w-3 flex-1 my-2 bg-zinc-900 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
+                <div class="w-full h-[70%] bg-gradient-to-t from-audio-tonal to-cyan-300 rounded-full opacity-80"></div>
+            </div>
+            <div
+                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-700 flex items-center justify-center relative cursor-ns-resize">
+                <div class="w-1 h-3 bg-zinc-400 absolute top-0.5 rounded-full origin-bottom transform rotate-0"></div>
+            </div>
+        </div>
+
+        <main class="flex-1 bg-zinc-950 flex flex-col relative min-w-0">
+            <div
+                class="flex-1 bg-zinc-900/10 rounded-lg m-2 border border-zinc-900/80 relative overflow-hidden flex items-center justify-center shadow-slot">
+
+                <div class="absolute inset-0 grid grid-cols-8 grid-rows-6 pointer-events-none opacity-5">
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                </div>
+
+                <span class="text-zinc-700 text-xs tracking-widest uppercase font-mono">Spectral Frame Buffer
+                    Canvas</span>
+
+                <div
+                    class="absolute bottom-3 right-3 bg-zinc-900/90 border border-zinc-800 px-2 py-1.5 rounded shadow-lg flex items-center gap-2 backdrop-blur">
+                    <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">View Gain</span>
+                    <input type="range"
+                        class="w-16 h-1 bg-zinc-950 rounded-lg appearance-none cursor-pointer accent-audio-tonal shadow-slot">
+                </div>
+
+                <div class="absolute border border-dashed border-audio-tonal bg-audio-tonal/5 pointer-events-none rounded hidden"
+                    id="selection-overlay"></div>
             </div>
         </main>
+
+        <div
+            class="w-12 border-l border-zinc-900 bg-zinc-950/40 p-1.5 flex flex-col items-center justify-between shrink-0">
+            <span class="text-[9px] font-bold text-zinc-600 uppercase tracking-wider">Out</span>
+            <div
+                class="w-3 flex-1 my-2 bg-zinc-900 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
+                <div
+                    class="w-full h-[55%] bg-gradient-to-t from-audio-tonal via-emerald-400 to-amber-400 rounded-full opacity-80">
+                </div>
+            </div>
+            <div
+                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-700 flex items-center justify-center relative cursor-ns-resize">
+                <div class="w-1 h-3 bg-zinc-400 absolute top-0.5 rounded-full origin-bottom transform rotate-12"></div>
+            </div>
+        </div>
     </div>
 
-    <footer class="h-48 border-t border-zinc-800 bg-zinc-900 flex shrink-0">
-        <div class="w-64 border-r border-zinc-800 p-3 flex flex-col justify-between shrink-0">
-            <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">FX Module (Auswahl)</span>
-            <div class="text-[11px] text-zinc-400">Wähle ein Objekt, um die FX-Kette zu editieren.</div>
-        </div>
-        
-        <div class="flex-1 p-4 grid grid-cols-4 gap-4" id="fx-parameters">
+    <footer class="h-56 border-t border-zinc-900 bg-zinc-900/40 flex shrink-0 backdrop-blur">
+
+        <div class="w-[38%] border-r border-zinc-900 p-3 flex flex-col">
+            <div class="flex items-center justify-between pb-2 border-b border-zinc-900/60 mb-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-audio-mod">Modulation Hub</span>
+                <select
+                    class="bg-zinc-950 text-[10px] px-2 py-0.5 rounded border border-zinc-800 text-zinc-400 font-mono shadow-slot focus:outline-none cursor-pointer">
+                    <option>LFO 1</option>
+                    <option>LFO 2</option>
+                    <option>LFO 3</option>
+                    <option>XY Pad 1</option>
+                    <option>XY Pad 2</option>
+                    <option>XY Pad 3</option>
+                </select>
             </div>
+
+            <div class="flex-1 flex gap-3 min-h-0">
+                <div
+                    class="flex-1 bg-zinc-950 shadow-slot rounded border border-zinc-900 p-1 relative overflow-hidden flex items-center justify-center">
+                    <svg class="w-full h-full stroke-audio-mod fill-none opacity-80" viewBox="0 0 100 40">
+                        <path d="M 0 20 C 25 0, 25 40, 50 20 C 75 0, 75 40, 100 20" stroke-width="1.5" />
+                    </svg>
+                    <div class="absolute top-0 bottom-0 w-[1px] bg-amber-400/40 left-1/3"></div>
+                </div>
+
+                <div class="w-32 flex flex-col justify-between text-[10px]">
+                    <div class="space-y-2">
+                        <div>
+                            <label class="text-zinc-500 block mb-0.5">Amount</label>
+                            <input type="range"
+                                class="w-full h-1 bg-zinc-950 accent-audio-mod appearance-none rounded-full shadow-slot">
+                        </div>
+                        <div>
+                            <label class="text-zinc-500 block mb-0.5">Offset</label>
+                            <input type="range"
+                                class="w-full h-1 bg-zinc-950 accent-audio-mod appearance-none rounded-full shadow-slot">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-bold text-audio-mod block mb-1 uppercase tracking-wider">Routing
+                            Target</label>
+                        <select
+                            class="w-full bg-zinc-950 text-[10px] px-1 py-0.5 rounded border border-zinc-800 text-zinc-300">
+                            <option>Object -> Density</option>
+                            <option>Object -> Brightness</option>
+                            <option>Spectral Gate Thresh</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex-1 p-3 flex flex-col">
+            <div class="flex items-center justify-between pb-2 border-b border-zinc-900/60 mb-3">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Object FX Matrix: <span
+                        class="text-zinc-200">Transients</span></span>
+                <span class="text-[10px] text-zinc-500 font-mono">Active FX: Base Parameter Block</span>
+            </div>
+
+            <div class="flex-1 grid grid-cols-4 gap-6 items-center px-4">
+
+                <div class="flex flex-col items-center group">
+                    <div
+                        class="w-14 h-14 rounded-full bg-zinc-950 shadow-slot border border-zinc-900 flex items-center justify-center p-1 cursor-ns-resize relative">
+                        <div
+                            class="w-11 h-11 rounded-full knob-gradient shadow-knob border border-zinc-700/70 flex items-center justify-center transition-transform duration-75 relative">
+                            <div
+                                class="w-1 h-3 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-[-45deg]">
+                            </div>
+                        </div>
+                        <div
+                            class="absolute inset-0 border-2 border-audio-mod/40 rounded-full pointer-events-none scale-105 border-dashed">
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold text-zinc-300 mt-2">Density</span>
+                    <span class="text-[9px] font-mono text-zinc-500 group-hover:text-audio-mod">1.00 (LFO1)</span>
+                </div>
+
+                <div class="flex flex-col items-center group">
+                    <div
+                        class="w-14 h-14 rounded-full bg-zinc-950 shadow-slot border border-zinc-900 flex items-center justify-center p-1 cursor-ns-resize relative">
+                        <div
+                            class="w-11 h-11 rounded-full knob-gradient shadow-knob border border-zinc-700/70 flex items-center justify-center relative">
+                            <div
+                                class="w-1 h-3 bg-zinc-400 absolute top-0.5 rounded-full origin-bottom transform rotate-0">
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-xs font-semibold text-zinc-300 mt-2">Brightness</span>
+                    <span class="text-[9px] font-mono text-zinc-500">0.00 (Static)</span>
+                </div>
+
+                <div
+                    class="col-span-2 bg-zinc-950/50 border border-zinc-900 rounded p-3 h-full flex flex-col justify-between text-[11px] text-zinc-400 shadow-slot">
+                    <div>
+                        <strong class="text-zinc-200 block mb-0.5">Spectral Gate Modus</strong>
+                        Niedrige Density dünnt leisere Bins basierend auf dem Anker-Durchschnittspegel aus. Perfekt für
+                        perkussive Fokussierung.
+                    </div>
+                    <div class="text-[9px] font-mono text-zinc-600 text-right">PR7 Engine Active</div>
+                </div>
+
+            </div>
+        </div>
     </footer>
 
     <script src="app.js"></script>
 </body>
+
 </html>
