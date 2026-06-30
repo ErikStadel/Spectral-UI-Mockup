@@ -190,44 +190,98 @@
         <div class="w-80 border-r border-zinc-800 p-3 bg-zinc-800/50 flex flex-col shrink-0">
             <div class="flex items-center justify-between pb-1.5 border-b border-zinc-800 mb-2">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-audio-mod">Modulation Hub</span>
-                <select class="bg-zinc-900 text-[10px] px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-300 font-mono shadow-slot cursor-pointer">
-                    <option>LFO 1</option>
-                    <option>LFO 2</option>
-                    <option>LFO 3</option>
-                    <option>XY 1</option>
-                    <option>XY 2</option>
-                    <option>XY 3</option>
+                <select id="mod-hub-selector" class="bg-zinc-900 text-[10px] px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-300 font-mono shadow-slot cursor-pointer">
+                    <option value="LFO1">LFO 1</option>
+                    <option value="LFO2">LFO 2</option>
+                    <option value="LFO3">LFO 3</option>
+                    <option value="XY1">XY 1</option>
+                    <option value="XY2">XY 2</option>
+                    <option value="XY3">XY 3</option>
                 </select>
             </div>
             
-            <div class="h-20 bg-zinc-900 shadow-slot rounded border border-zinc-700/70 p-1 mb-2.5 flex items-center justify-center relative overflow-hidden">
-                <svg class="w-full h-full stroke-audio-mod fill-none opacity-80" viewBox="0 0 100 40">
-                    <path d="M 0 20 C 25 0, 25 40, 50 20 C 75 0, 75 40, 100 20" stroke-width="1.2"/>
-                </svg>
-            </div>
-            
-            <div class="space-y-2 text-[10px]">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="text-zinc-400 block mb-0.5 font-medium">Amount</label>
-                        <input type="range" class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
-                    </div>
-                    <div>
-                        <label class="text-zinc-400 block mb-0.5 font-medium">Offset</label>
-                        <input type="range" class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
-                    </div>
+            <div id="mod-hub-lfo-content" class="flex flex-col flex-1">
+                <div class="h-20 bg-zinc-900 shadow-slot rounded border border-zinc-700/70 p-1 mb-2.5 flex items-center justify-center relative overflow-hidden">
+                    <svg class="w-full h-full stroke-audio-mod fill-none opacity-80" viewBox="0 0 100 40">
+                        <path d="M 0 20 C 25 0, 25 40, 50 20 C 75 0, 75 40, 100 20" stroke-width="1.2"/>
+                    </svg>
                 </div>
                 
-                <div>
-                    <label class="text-[9px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination</label>
-                    <select class="w-full bg-zinc-900 text-[10px] px-2 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
-                        <option>Target -> Base -> Density</option>
-                        <option>Target -> Base -> Brightness</option>
-                        <option>Target -> Base -> Gain</option>
-                        <option>Target -> Base -> Pitch</option>
-                    </select>
+                <div class="space-y-2 text-[10px]">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-zinc-400 block mb-0.5 font-medium">Amount</label>
+                            <input type="range" class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="text-zinc-400 block mb-0.5 font-medium">Offset</label>
+                            <input type="range" class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination</label>
+                        <select class="w-full bg-zinc-900 text-[10px] px-2 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
+                            <option>Target -> Base -> Density</option>
+                            <option>Target -> Base -> Brightness</option>
+                            <option>Target -> Base -> Gain</option>
+                            <option>Target -> Base -> Pitch</option>
+                        </select>
+                    </div>
                 </div>
             </div>
+
+            <div id="mod-hub-xy-content" class="hidden flex flex-col flex-1">
+                <div class="h-20 bg-zinc-950/60 shadow-slot rounded border border-zinc-700/70 p-1 mb-2.5 relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-0 grid grid-cols-4 grid-rows-2 pointer-events-none opacity-10">
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-b border-zinc-400 border-dashed"></div>
+                        <div class="border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-r border-zinc-400 border-dashed"></div>
+                        <div class="border-r border-zinc-400 border-dashed"></div>
+                    </div>
+                    <div class="absolute w-full h-[1px] bg-zinc-800/80 top-1/2 left-0"></div>
+                    <div class="absolute h-full w-[1px] bg-zinc-800/80 left-1/2 top-0"></div>
+                    
+                    <div class="absolute left-[65%] top-[35%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-zinc-900 border-2 border-audio-mod shadow-[0_0_10px_#E0A96D] cursor-pointer flex items-center justify-center group/puck">
+                        <div class="w-1 h-1 rounded-full bg-audio-mod opacity-60 group-hover/puck:opacity-100 transition-opacity"></div>
+                    </div>
+                    <span class="absolute bottom-1 right-1.5 text-[7px] font-mono text-zinc-600 uppercase tracking-widest">X / Y</span>
+                </div>
+
+                <div class="space-y-2 text-[10px]">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[8px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination X</label>
+                            <select class="w-full bg-zinc-900 text-[9px] px-1.5 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
+                                <option selected>Base -> Density</option>
+                                <option>Base -> Brightness</option>
+                                <option>Base -> Gain</option>
+                                <option>Base -> Pitch</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[8px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination Y</label>
+                            <select class="w-full bg-zinc-900 text-[9px] px-1.5 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
+                                <option>Base -> Density</option>
+                                <option>Base -> Brightness</option>
+                                <option>Base -> Gain</option>
+                                <option selected>Base -> Pitch</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('mod-hub-selector').addEventListener('change', function(e) {
+                const isXY = e.target.value.startsWith('XY');
+                document.getElementById('mod-hub-lfo-content').classList.toggle('hidden', isXY);
+                document.getElementById('mod-hub-xy-content').classList.toggle('hidden', !isXY);
+            });
+        </script>
         </div>
 
         <div class="flex-1 flex gap-2 p-2 overflow-x-auto no-scrollbar bg-zinc-900" id="fx-rack-lane">
