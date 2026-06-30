@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spectral Processor - FX Rack Edition</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,6 +21,7 @@
                         }
                     },
                     boxShadow: {
+                        // Soft Audio UI / Dark Neumorphism Definitionen
                         'knob': '0 4px 6px -1px rgba(0,0,0,0.6), 0 2px 4px -1px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12)',
                         'knob-selected': '0 0 8px #A78BFA, inset 0 1px 0 rgba(255,255,255,0.2)', // Lila Glühen für aktiven Timeline-Parameter
                         'slot': 'inset 2px 2px 6px rgba(0,0,0,0.8), inset -1px -1px 2px rgba(255,255,255,0.02)',
@@ -31,7 +33,7 @@
     </script>
     <style>
         .knob-gradient { background: linear-gradient(135deg, #4b5563 0%, #111827 100%); }
-        /* Versteckt Scrollbars, erlaubt aber das Scrollen im Rack */
+        /* Versteckt Scrollbars im FX-Rack, erlaubt aber horizontales Scrollen via Mausrad */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
@@ -64,6 +66,7 @@
             </div>
             
             <div class="flex-1 overflow-y-auto p-3 space-y-2.5">
+                
                 <div class="p-3 rounded-lg bg-zinc-900/80 border border-zinc-850 shadow-lg flex flex-col gap-2.5 ring-1 ring-audio-mod/30">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
@@ -84,7 +87,8 @@
                         </div>
                     </div>
                 </div>
-                              <div class="p-3 rounded-lg bg-zinc-900/40 border border-zinc-900/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
+                
+                <div class="p-3 rounded-lg bg-zinc-900/40 border border-zinc-900/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <div class="w-2 h-2 rounded-full bg-audio-tonal"></div>
@@ -104,6 +108,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </aside>
 
@@ -117,12 +122,13 @@
             </div>
         </div>
 
-                <div class="flex-1 bg-zinc-950 flex flex-col min-w-0">
+        <div class="flex-1 bg-zinc-950 flex flex-col min-w-0">
             
             <div class="flex-1 bg-zinc-900/10 rounded-t-lg mx-2 mt-2 border-t border-x border-zinc-900/80 relative overflow-hidden flex items-center justify-center shadow-slot">
                 <div class="absolute inset-0 grid grid-cols-8 grid-rows-4 pointer-events-none opacity-5">
                     <div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div>
                 </div>
+                
                 <span class="text-zinc-700 text-xs tracking-widest uppercase font-mono">Spectral Frame Buffer Canvas</span>
                 
                 <div class="absolute bottom-3 right-3 bg-zinc-900/90 border border-zinc-800 px-2 py-1.5 rounded shadow-lg flex items-center gap-2 backdrop-blur">
@@ -193,7 +199,6 @@
                     </div>
                     <span class="text-[8px] font-mono text-zinc-600">CORE</span>
                 </div>
-                
                 <div class="flex-1 grid grid-cols-4 gap-2 p-2 items-center justify-items-center">
                     
                     <div class="flex flex-col items-center cursor-pointer">
