@@ -13,15 +13,27 @@
                     colors: {
                         audio: {
                             transient: '#FF5252',
-                            tonal: '#4AA3FF',
                             noise: '#4FD16A',
-                            mod: '#E0A96D',       // Amber für Mod Hub
+                            mod: '#E0A96D',       // Amber für Mod Hub (Jetzt globaler Standard für Slider)
                             timeline: '#A78BFA',  // Purple für Story Timeline
-                            rackBase: '#27272a',   // zinc 700 für das Hauptgehäuse
+                            rackBase: '#27272a',   // Zinc 700 für das Hauptgehäuse
+                        },
+                        // Dedizierte Boutique-Palette für die Effekt-Module
+                        fx: {
+                            delay: '#10B981',       // emerald-500 (Echoband / Feedback)
+                            spaceBlur: '#0EA5E9',   // sky-500 (Atmosphäre / Tiefe)
+                            filter: '#F59E0B',      // amber-500 (Klassischer Analog-Synth Goldton)
+                            compressor: '#3B82F6',  // blue-500 (Studio-Präzision & Dynamik)
+                            saturation: '#F97316',  // orange-500 (Röhrenwärme & Tape-Sättigung)
+                            distortion: '#F43F5E',  // rose-500 (Aggressives Hard-Clipping)
+                            contrast: '#D946EF',    // fuchsia-500 (Magisches Spektral-Shaping)
+                            freeze: '#06B6D4',      // cyan-500 (Eisiges, stehendes Spektrum)
+                            perlin: '#84CC16',      // lime-500 (Organisches Mathe-Rauschen)
+                            brownian: '#8B5CF6'     // violet-500 (Tiefes, chaotisches Drift-Rauschen)
                         }
                     },
                     boxShadow: {
-                        // Soft Audio UI / Dark Neumorphism Definitionen – angepasst für bessere Sichtbarkeit
+                        // Soft Audio UI / Dark Neumorphism Definitionen
                         'knob': '0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -1px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.18)',
                         'knob-selected': '0 0 10px #A78BFA, inset 0 1px 0 rgba(255,255,255,0.25)', // Lila Glühen für aktiven Timeline-Parameter
                         'slot': 'inset 2px 2px 6px rgba(0,0,0,0.6), inset -1px -1px 3px rgba(255,255,255,0.08)',
