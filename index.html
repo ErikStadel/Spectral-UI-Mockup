@@ -84,22 +84,20 @@
             </div>
             
             <div class="flex-1 overflow-y-auto p-3 space-y-2.5">
-                
+                <!-- Objektkarte: Aktives Transienten-Objekt -->
                 <div class="p-3 rounded-lg bg-zinc-800 border border-zinc-700 shadow-lg flex flex-col gap-2.5 ring-1 ring-audio-mod/30">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <div class="w-2 h-2 rounded-full bg-audio-transient animate-pulse"></div>
-                    <!-- Objektkarte: Aktives Transienten-Objekt -->
                             <span class="text-xs font-bold text-zinc-100">Transients</span>
                         </div>
                         <span class="text-[9px] font-mono text-zinc-400">ID: #01</span>
                     </div>
                     <div class="flex items-center justify-between gap-1">
                         <div class="flex gap-1">
-                            <!-- Engage / Aufnahme / FX Fokus -->
+                            <!-- Engage / Rec-->
                             <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-cyan-900/50 bg-cyan-950/40 text-cyan-400 shadow-btn-active">Eng</button>
                             <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>
-                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-audio-mod/50 bg-audio-mod/10 text-audio-mod shadow-btn-active">FX</button>
                         </div>
                         <div class="flex gap-1">
                             <button class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-tonal">S</button>
@@ -107,7 +105,8 @@
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- Objektkarte: Inaktives Tonal Bed-Objekt -->
                 <div class="p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
@@ -120,8 +119,7 @@
                         <div class="flex gap-1">
                             <!-- Engage / Aufnahme / FX Fokus -->
                             <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Eng</button>
-                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>
-                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">FX</button>
+                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>                           
                         </div>
                         <div class="flex gap-1">
                             <button class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">S</button>
@@ -295,15 +293,6 @@
             </div>
         </div>
 
-        <script>
-            document.getElementById('mod-hub-selector').addEventListener('change', function(e) {
-                const isXY = e.target.value.startsWith('XY');
-                document.getElementById('mod-hub-lfo-content').classList.toggle('hidden', isXY);
-                document.getElementById('mod-hub-xy-content').classList.toggle('hidden', !isXY);
-            });
-            // Initialer Trigger beim Laden, um die Standardauswahl (XY 1) direkt zu forcieren
-            document.getElementById('mod-hub-selector').dispatchEvent(new Event('change'));
-        </script>
 
         </div>
 
@@ -422,15 +411,177 @@
                 </div>
             </div>
 
-            <div class="w-24 h-full border border-dashed border-zinc-700 rounded-lg flex flex-col items-center justify-center shrink-0 hover:border-zinc-600 transition-colors cursor-pointer bg-zinc-800/30 group">
+            <!-- Neuer Effekt wird an die Rack-Kette angehängt -->    
+            <div id="add-fx-btn" class="w-24 h-full border border-dashed border-zinc-700 rounded-lg flex flex-col items-center justify-center shrink-0 hover:border-zinc-600 hover:bg-zinc-800/20 transition-all duration-200 cursor-pointer bg-zinc-800/30 group">               
                 <span class="text-2xl text-zinc-500 group-hover:text-zinc-300 group-hover:scale-110 transition-transform">+</span>
-                <!-- Neuer Effekt wird an die Rack-Kette angehängt -->
                 <span class="text-[9px] font-bold uppercase tracking-wider text-zinc-500 group-hover:text-zinc-300 mt-1">Add FX</span>
             </div>
 
         </div>
     </footer>
 
+<!-- FX Window Overlay: hidden -->    
+<div id="fx-browser-overlay" class="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-all duration-300">
+        
+        <div class="w-full max-w-3xl bg-zinc-900 border border-zinc-700 shadow-2xl rounded-xl flex flex-col overflow-hidden max-h-[85vh]">
+            
+            <div class="h-10 bg-zinc-800/90 border-b border-zinc-950 px-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-[11px] font-mono tracking-widest uppercase text-zinc-500">Routing</span>
+                    <span class="text-xs font-bold tracking-wider text-zinc-200 uppercase">Load Spectral FX Processor</span>
+                </div>
+                <button id="close-fx-btn" class="text-zinc-500 hover:text-zinc-200 text-sm font-mono tracking-tighter px-2 py-0.5 rounded border border-transparent hover:border-zinc-700 hover:bg-zinc-800 transition-all">
+                    [ESC] CLOSE
+                </button>
+            </div>
+
+            <div class="flex-1 p-4 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 bg-zinc-900/50">
+                
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-spaceBlur/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-spaceBlur transition-colors">Space Blur</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-spaceBlur shadow-[0_0_6px_#0EA5E9] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Space & Depth</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Atmosphärischer Spektral-Reverb für unendliche, dichte Klangwolken.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-delay/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-delay transition-colors">Time Smear</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-delay shadow-[0_0_6px_#10B981] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Time-Domain</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Flüssiges Tape-Echo, das Frequenzen sanft ineinander verschmiert.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-filter/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-filter transition-colors">Shade Contour</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-filter shadow-[0_0_6px_#F59E0B] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Tone Filter</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Warmer, analog-modellierter Filter zur plastischen Frequenz-Formung.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-compressor/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-compressor transition-colors">Mass Forge</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-compressor shadow-[0_0_6px_#3B82F6] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Dynamics</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Adaptiver Dynamik-Compander, der dem Signal physisches Gewicht verleiht.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-saturation/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-saturation transition-colors">Heat Glow</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-saturation shadow-[0_0_6px_#F97316] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Harmonics</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Sättigungs-Schmiede für Röhrenwärme und harmonischen Oberton-Glow.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-distortion/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-distortion transition-colors">Ruin Matrix</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-distortion shadow-[0_0_6px_#F43F5E] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Destruction</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Aggressives Hard-Clipping und mathematische Wavefolding-Zerstörung.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-contrast/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-contrast transition-colors">Prism Focus</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-contrast shadow-[0_0_6px_#D946EF] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Spectral Dynamics</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Regelt den spektralen Kontrast über die Frequenzbins (Scharfzeichner).</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-freeze/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-freeze transition-colors">Stasis Cloud</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-freeze shadow-[0_0_6px_#06B6D4] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Spectral Freeze</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Friert das Spektrum in Zeitschleife ein. Erzeugt unendliche Flächen.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-perlin/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-perlin transition-colors">Fluid Grain</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-perlin shadow-[0_0_6px_#84CC16] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Noise Gen</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Mathematisch fließendes Perlin-Rauschen für organische Texturen.</p>
+                </div>
+
+                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-brownian/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-brownian transition-colors">Chaos Float</span>
+                        <div class="w-2 h-2 rounded-full bg-fx-brownian shadow-[0_0_6px_#8B5CF6] mt-1"></div>
+                    </div>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Noise Gen</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Unberechenbare Brown'sche Molekularbewegung für tiefe Drift-Rauschpfade.</p>
+                </div>
+
+            </div>
+            
+            <div class="h-6 bg-zinc-950 border-t border-zinc-800 px-4 flex items-center justify-between">
+                <span class="text-[9px] font-mono text-zinc-600">Tip: Click an effect card to instantiate it into the next free rack slot.</span>
+                <span class="text-[9px] font-mono text-zinc-600">v1.0.0 Alpha</span>
+            </div>
+        </div>
+    </div>
     <script src="app.js"></script>
+            <script>
+            document.getElementById('mod-hub-selector').addEventListener('change', function(e) {
+                const isXY = e.target.value.startsWith('XY');
+                document.getElementById('mod-hub-lfo-content').classList.toggle('hidden', isXY);
+                document.getElementById('mod-hub-xy-content').classList.toggle('hidden', !isXY);
+            });
+            // Initialer Trigger beim Laden, um die Standardauswahl (XY 1) direkt zu forcieren
+            document.getElementById('mod-hub-selector').dispatchEvent(new Event('change'));
+        </script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const openBrowserBtn = document.getElementById('add-fx-btn');
+            const closeBrowserBtn = document.getElementById('close-fx-btn');
+            const fxOverlay = document.getElementById('fx-browser-overlay');
+
+            // Funktion: Browser öffnen
+            if (openBrowserBtn && fxOverlay) {
+                openBrowserBtn.addEventListener('click', () => {
+                    fxOverlay.classList.remove('hidden');
+                });
+            }
+
+            // Funktion: Browser schließen
+            if (closeBrowserBtn && fxOverlay) {
+                closeBrowserBtn.addEventListener('click', () => {
+                    fxOverlay.classList.add('hidden');
+                });
+            }
+
+            // Komfort-Feature 1: Schließen bei Klick auf den abgedunkelten Hintergrund
+            if (fxOverlay) {
+                fxOverlay.addEventListener('click', (e) => {
+                    if (e.target === fxOverlay) {
+                        fxOverlay.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Komfort-Feature 2: Schließen über die ESC-Taste
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && fxOverlay && !fxOverlay.classList.contains('hidden')) {
+                    fxOverlay.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
