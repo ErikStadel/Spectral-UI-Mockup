@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="de" class="h-full bg-zinc-900 text-zinc-100">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spectral Processor - FX Rack Edition</title>
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -44,20 +45,34 @@
         }
     </script>
     <style>
-        .knob-gradient { background: linear-gradient(135deg, #52525b 0%, #27272a 100%); }
+        .knob-gradient {
+            background: linear-gradient(135deg, #52525b 0%, #27272a 100%);
+        }
+
         /* Versteckt Scrollbars im FX-Rack, erlaubt aber horizontales Scrollen via Mausrad */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
+
 <body class="h-full flex flex-col font-sans select-none overflow-hidden bg-zinc-900">
 
     <!-- Top Navigation / Global Toolbar -->
-    <header class="h-12 border-b border-zinc-800 bg-zinc-800/90 flex items-center justify-between px-4 shrink-0 backdrop-blur">
+    <header
+        class="h-12 border-b border-zinc-800 bg-zinc-800/90 flex items-center justify-between px-4 shrink-0 backdrop-blur">
         <div class="flex items-center gap-6">
-            <span class="font-black tracking-widest text-sm bg-clip-text text-transparent bg-gradient-to-r from-zinc-200 to-zinc-400">SPCTRL /\ ARC</span>
-            <div class="bg-zinc-900 shadow-slot px-3 py-1 text-xs rounded border border-zinc-700 cursor-pointer hover:border-zinc-600 text-zinc-200">
-            <!-- Preset-Auswahl und Preset-Management -->
+            <span
+                class="font-black tracking-widest text-sm bg-clip-text text-transparent bg-gradient-to-r from-zinc-200 to-zinc-400">SPCTRL
+                /\ ARC</span>
+            <div
+                class="bg-zinc-900 shadow-slot px-3 py-1 text-xs rounded border border-zinc-700 cursor-pointer hover:border-zinc-600 text-zinc-200">
+                <!-- Preset-Auswahl und Preset-Management -->
                 Default Preset ▾
             </div>
         </div>
@@ -70,87 +85,132 @@
     </header>
 
     <div class="flex flex-1 min-h-0">
-        
+
         <!-- Objekt-Datenbank: Verwaltung aller spektralen Objekte -->
         <aside class="w-80 border-r border-zinc-800 bg-zinc-800/60 flex flex-col shrink-0">
             <div class="p-3 border-b border-zinc-800 flex items-center justify-between">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Objekt-Datenbank</span>
                 <div class="flex gap-1.5">
                     <!-- Auto-Erkennung neuer Masken / Objekte -->
-                    <button id="auto-detect-btn" class="px-2 h-6 bg-zinc-700 hover:bg-zinc-600 shadow-knob border border-zinc-600 text-[10px] font-semibold rounded text-zinc-200 transition-all">Auto-Detect</button>
+                    <button id="auto-detect-btn"
+                        class="px-2 h-6 bg-zinc-700 hover:bg-zinc-600 shadow-knob border border-zinc-600 text-[10px] font-semibold rounded text-zinc-200 transition-all">Auto-Detect</button>
                     <!-- Manuelles Hinzufügen eines neuen Objektes -->
                     <div class="relative inline-block text-left">
-                    <button id="add-object-btn" class="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 shadow-knob border border-zinc-600 rounded flex items-center justify-center text-xs font-bold text-zinc-200 transition-all focus:outline-none">
-                        +
-                    </button>
+                        <button id="add-object-btn"
+                            class="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 shadow-knob border border-zinc-600 rounded flex items-center justify-center text-xs font-bold text-zinc-200 transition-all focus:outline-none">
+                            +
+                        </button>
 
-                    <div id="add-object-dropdown" class="absolute left-0 mt-1.5 w-44 rounded bg-zinc-800 border border-zinc-700 shadow-2xl py-1 z-40 hidden origin-top-left transition-all duration-100">
-                        
-                        <div class="px-2.5 py-1 text-[9px] font-mono tracking-widest uppercase text-zinc-500 select-none">
-                            Transform
+                        <div id="add-object-dropdown"
+                            class="absolute left-0 mt-1.5 w-44 rounded bg-zinc-800 border border-zinc-700 shadow-2xl py-1 z-40 hidden origin-top-left transition-all duration-100">
+
+                            <div
+                                class="px-2.5 py-1 text-[9px] font-mono tracking-widest uppercase text-zinc-500 select-none">
+                                Transform
+                            </div>
+
+                            <button
+                                class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                                <div
+                                    class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors">
+                                </div>
+                                Wavetable: Sine
+                            </button>
+
+                            <button
+                                class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                                <div
+                                    class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors">
+                                </div>
+                                Wavetable: Saw
+                            </button>
+
+                            <button
+                                class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                                <div
+                                    class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors">
+                                </div>
+                                Wavetable: Square
+                            </button>
+
+                            <button
+                                class="w-full text-left px-3 py-1 text-[11px] text-zinc-400 italic hover:bg-zinc-700/60 hover:text-zinc-100 border-t border-zinc-700/40 mt-0.5 pt-1.5 transition-colors flex items-center gap-1.5">
+                                <span class="text-xs font-sans not-italic text-zinc-500">📁</span>
+                                Load Source...
+                            </button>
+
+                            <div class="border-t border-zinc-700/60 my-1"></div>
+
+                            <div
+                                class="px-2.5 py-1 text-[9px] font-mono tracking-widest uppercase text-zinc-500 select-none">
+                                Transient
+                            </div>
+
+                            <button
+                                class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                                <div
+                                    class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-transient transition-colors">
+                                </div>
+                                Transient Object
+                            </button>
+
                         </div>
-                        
-                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
-                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors"></div>
-                            Wavetable: Sine
-                        </button>
-                        
-                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
-                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors"></div>
-                            Wavetable: Saw
-                        </button>
-                        
-                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
-                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors"></div>
-                            Wavetable: Square
-                        </button>
-                        
-                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-400 italic hover:bg-zinc-700/60 hover:text-zinc-100 border-t border-zinc-700/40 mt-0.5 pt-1.5 transition-colors flex items-center gap-1.5">
-                            <span class="text-xs font-sans not-italic text-zinc-500">📁</span>
-                            Load Source...
-                        </button>
-
-                        <div class="border-t border-zinc-700/60 my-1"></div>
-
-                        <div class="px-2.5 py-1 text-[9px] font-mono tracking-widest uppercase text-zinc-500 select-none">
-                            Transient
-                        </div>
-                        
-                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
-                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-transient transition-colors"></div>
-                            Transient Object
-                        </button>
-                        
                     </div>
-            </div>
                 </div>
             </div>
-            
+
             <div class="flex-1 overflow-y-auto p-3 space-y-2.5">
                 <!-- Objektkarte: Aktives Transienten-Objekt -->
-                <div class="p-3 rounded-lg bg-zinc-800 border border-zinc-700 shadow-lg flex flex-col gap-2.5 ring-1 ring-audio-mod/30">
+                <div
+                    class="p-3 rounded-lg bg-zinc-800 border border-zinc-700 shadow-lg flex flex-col gap-3 ring-1 ring-audio-mod/30 w-44 shrink-0">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-audio-transient animate-pulse"></div>
+                            <div class="w-2 h-2 rounded-full bg-audio-transient animate-pulse shadow-[0_0_4px_#FF5252]">
+                            </div>
                             <span class="text-xs font-bold text-zinc-100">Transients</span>
                         </div>
                         <span class="text-[9px] font-mono text-zinc-400">ID: #01</span>
                     </div>
-                    <div class="flex items-center justify-between gap-1">
+
+                    <div
+                        class="flex flex-col items-center justify-center py-2 bg-zinc-900/40 rounded border border-zinc-950/40 p-2 shadow-inner">
+                        <span class="text-[8px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Threshold</span>
+
+                        <div
+                            class="w-12 h-12 rounded-full bg-zinc-950 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-11 h-11 rounded-full bg-gradient-to-b from-zinc-700 to-zinc-800 shadow-knob border border-zinc-650 flex items-center justify-center relative cursor-pointer group hover:border-zinc-500 transition-colors">
+                                <div
+                                    class="w-0.5 h-2.5 bg-audio-transient absolute top-0.5 rounded-full origin-bottom transform rotate-[-35deg] shadow-[0_0_3px_rgba(255,82,82,0.6)]">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 w-20">
+                            <input type="text" value="-12.4 dB"
+                                class="w-full h-4 bg-zinc-950 border border-zinc-900 focus:border-audio-transient/50 focus:outline-none rounded text-center font-mono text-[10px] text-audio-transient font-bold tracking-wider shadow-inner select-all cursor-text transition-colors" />
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-1 mt-0.5">
                         <div class="flex gap-1">
-                            <!-- Engage / Rec-->
-                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-cyan-900/50 bg-cyan-950/40 text-cyan-400 shadow-btn-active">Eng</button>
-                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>
+                            <button
+                                class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-cyan-900/50 bg-cyan-950/40 text-cyan-400 shadow-btn-active">Eng</button>
+                            <button
+                                class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>
                         </div>
                         <div class="flex gap-1">
-                            <button class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-tonal">S</button>
-                            <button class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-transient">M</button>
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-tonal transition-colors">S</button>
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-transient transition-colors">M</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Objektkarte: Inaktives Tonal Bed-Objekt -->
-                <div class="p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
+                <div
+                    class="p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <div class="w-2 h-2 rounded-full bg-audio-tonal"></div>
@@ -161,12 +221,16 @@
                     <div class="flex items-center justify-between gap-1">
                         <div class="flex gap-1">
                             <!-- Engage / Aufnahme / FX Fokus -->
-                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Eng</button>
-                            <button class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>                           
+                            <button
+                                class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Eng</button>
+                            <button
+                                class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>
                         </div>
                         <div class="flex gap-1">
-                            <button class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">S</button>
-                            <button class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">M</button>
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">S</button>
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">M</button>
                         </div>
                     </div>
                 </div>
@@ -174,66 +238,101 @@
             </div>
         </aside>
         <!-- In Regler -->
-        <div class="w-12 border-r border-zinc-800 bg-zinc-900/70 p-1.5 flex flex-col items-center justify-between shrink-0">
+        <div
+            class="w-12 border-r border-zinc-800 bg-zinc-900/70 p-1.5 flex flex-col items-center justify-between shrink-0">
             <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">In</span>
-            
-            <div class="w-3 flex-1 my-2 bg-zinc-950 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
-                <div class="w-full h-[65%] bg-gradient-to-t from-[#6A00A8] via-[#FF2A00] to-[#FFC400] rounded-full opacity-90 shadow-[0_0_8px_rgba(255,42,0,0.2)]"></div>
+
+            <div
+                class="w-3 flex-1 my-2 bg-zinc-950 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
+                <div
+                    class="w-full h-[65%] bg-gradient-to-t from-[#6A00A8] via-[#FF2A00] to-[#FFC400] rounded-full opacity-90 shadow-[0_0_8px_rgba(255,42,0,0.2)]">
+                </div>
             </div>
-            
-            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
-                <div class="w-0.5 h-2.5 bg-[#FF2A00] absolute top-0.5 rounded-full origin-bottom shadow-[0_0_4px_rgba(255,42,0,0.6)]"></div>
+
+            <div
+                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
+                <div
+                    class="w-0.5 h-2.5 bg-[#FF2A00] absolute top-0.5 rounded-full origin-bottom shadow-[0_0_4px_rgba(255,42,0,0.6)]">
+                </div>
             </div>
         </div>
         <!-- Spectral View -->
         <div class="flex-1 bg-zinc-900 flex flex-col min-w-0">
-            
-            <div class="flex-1 bg-zinc-950 rounded-t-lg mx-2 mt-2 border-t border-x border-zinc-700/70 relative overflow-hidden flex items-center justify-center shadow-slot">
-                
-                <img src="spectralView.png" alt="Spectral View Preview" class="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-90" />
+
+            <div
+                class="flex-1 bg-zinc-950 rounded-t-lg mx-2 mt-2 border-t border-x border-zinc-700/70 relative overflow-hidden flex items-center justify-center shadow-slot">
+
+                <img src="spectralView.png" alt="Spectral View Preview"
+                    class="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-90" />
 
                 <div class="absolute inset-0 grid grid-cols-8 grid-rows-4 pointer-events-none opacity-10 z-10">
-                    <div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div><div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
+                    <div class="border-b border-r border-zinc-400"></div>
                 </div>
-                
-                <div class="absolute bottom-3 right-3 bg-zinc-800/90 border border-zinc-700 px-2 py-1.5 rounded shadow-lg flex items-center gap-2 backdrop-blur z-10">
+
+                <div
+                    class="absolute bottom-3 right-3 bg-zinc-800/90 border border-zinc-700 px-2 py-1.5 rounded shadow-lg flex items-center gap-2 backdrop-blur z-10">
                     <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-wider">View Gain</span>
-                    <input type="range" class="w-16 h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-audio-mod shadow-slot">
+                    <input type="range"
+                        class="w-16 h-1 bg-zinc-900 rounded-lg appearance-none cursor-pointer accent-audio-mod shadow-slot">
                 </div>
             </div>
             <!-- Story Timeline -->
-            <div class="h-28 bg-zinc-800/60 border-t border-b border-zinc-700/80 mx-2 mb-2 rounded-b-lg flex flex-col relative overflow-hidden shadow-slot">
-                <div class="h-6 bg-zinc-900/70 border-b border-zinc-800 px-3 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+            <div
+                class="h-28 bg-zinc-800/60 border-t border-b border-zinc-700/80 mx-2 mb-2 rounded-b-lg flex flex-col relative overflow-hidden shadow-slot">
+                <div
+                    class="h-6 bg-zinc-900/70 border-b border-zinc-800 px-3 flex items-center justify-between text-[10px] font-mono text-zinc-400">
                     <div class="flex items-center gap-2">
                         <!-- Timeline Header: aktueller Automationsparameter -->
-                        <span class="text-audio-timeline font-bold uppercase tracking-wider text-[9px]">Story Timeline</span>
-                        <span class="text-zinc-200 bg-zinc-800 px-1.5 py-0.5 rounded border border-zinc-700">Target: <strong class="text-audio-timeline">Base -> Density</strong></span>
+                        <span class="text-audio-timeline font-bold uppercase tracking-wider text-[9px]">Story
+                            Timeline</span>
+                        <span class="text-zinc-200 bg-zinc-800 px-1.5 py-0.5 rounded border border-zinc-700">Target:
+                            <strong class="text-audio-timeline">Base -> Density</strong></span>
                     </div>
-                    <div class="flex gap-20 pr-4"><span>0:00</span><span>1:00</span><span>2:00</span><span>3:00</span><span>4:00</span></div>
+                    <div class="flex gap-20 pr-4">
+                        <span>0:00</span><span>1:00</span><span>2:00</span><span>3:00</span><span>4:00</span></div>
                 </div>
 
                 <div class="flex-1 relative p-1">
                     <!-- SVG-Kurve repräsentiert Keyframe-Automation -->
-                    <svg class="absolute inset-0 w-full h-full stroke-audio-timeline fill-none opacity-70" viewBox="0 0 100 40" preserveAspectRatio="none">
-                        <path d="M 0 30 Q 20 5, 40 12 T 70 25 L 100 8" stroke-width="2"/>
+                    <svg class="absolute inset-0 w-full h-full stroke-audio-timeline fill-none opacity-70"
+                        viewBox="0 0 100 40" preserveAspectRatio="none">
+                        <path d="M 0 30 Q 20 5, 40 12 T 70 25 L 100 8" stroke-width="2" />
                     </svg>
-                    <div class="absolute left-[20%] top-[20%] w-3 h-3 rounded-full bg-zinc-700 border-2 border-audio-timeline shadow-md"></div>
-                    <div class="absolute left-[40%] top-[25%] w-3 h-3 rounded-full bg-zinc-700 border-2 border-audio-timeline shadow-md"></div>
-                    <div class="absolute left-[70%] top-[55%] w-3 h-3 rounded-full bg-zinc-700 border-2 border-audio-timeline shadow-md"></div>
-                    <div class="absolute top-0 bottom-0 w-[1.5px] bg-cyan-400 left-[33%] shadow-[0_0_8px_rgba(34,211,238,0.8)]"></div>
+                    <div
+                        class="absolute left-[20%] top-[20%] w-3 h-3 rounded-full bg-zinc-700 border-2 border-audio-timeline shadow-md">
+                    </div>
+                    <div
+                        class="absolute left-[40%] top-[25%] w-3 h-3 rounded-full bg-zinc-700 border-2 border-audio-timeline shadow-md">
+                    </div>
+                    <div
+                        class="absolute left-[70%] top-[55%] w-3 h-3 rounded-full bg-zinc-700 border-2 border-audio-timeline shadow-md">
+                    </div>
+                    <div
+                        class="absolute top-0 bottom-0 w-[1.5px] bg-cyan-400 left-[33%] shadow-[0_0_8px_rgba(34,211,238,0.8)]">
+                    </div>
                 </div>
             </div>
         </div>
-         <!-- Out Regler -->
-        <div class="w-12 border-r border-zinc-800 bg-zinc-900/70 p-1.5 flex flex-col items-center justify-between shrink-0">
+        <!-- Out Regler -->
+        <div
+            class="w-12 border-r border-zinc-800 bg-zinc-900/70 p-1.5 flex flex-col items-center justify-between shrink-0">
             <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">In</span>
-            
-            <div class="w-3 flex-1 my-2 bg-zinc-950 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
-                <div class="w-full h-[65%] bg-gradient-to-t from-[#6A00A8] via-[#FF2A00] to-[#FFC400] rounded-full opacity-90 shadow-[0_0_8px_rgba(255,42,0,0.2)]"></div>
+
+            <div
+                class="w-3 flex-1 my-2 bg-zinc-950 shadow-slot rounded-full relative overflow-hidden flex flex-col justify-end">
+                <div
+                    class="w-full h-[65%] bg-gradient-to-t from-[#6A00A8] via-[#FF2A00] to-[#FFC400] rounded-full opacity-90 shadow-[0_0_8px_rgba(255,42,0,0.2)]">
+                </div>
             </div>
-            
-            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
-                <div class="w-0.5 h-2.5 bg-[#FF2A00] absolute top-0.5 rounded-full origin-bottom shadow-[0_0_4px_rgba(255,42,0,0.6)]"></div>
+
+            <div
+                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
+                <div
+                    class="w-0.5 h-2.5 bg-[#FF2A00] absolute top-0.5 rounded-full origin-bottom shadow-[0_0_4px_rgba(255,42,0,0.6)]">
+                </div>
             </div>
         </div>
     </div>
@@ -243,36 +342,43 @@
         <div class="w-80 border-r border-zinc-800 p-3 bg-zinc-800/50 flex flex-col shrink-0 justify-between">
             <div class="flex items-center justify-between pb-1.5 border-b border-zinc-800 mb-1.5">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-audio-mod">Modulation Hub</span>
-                <select id="mod-hub-selector" class="bg-zinc-900 text-[10px] px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-300 font-mono shadow-slot cursor-pointer">
+                <select id="mod-hub-selector"
+                    class="bg-zinc-900 text-[10px] px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-300 font-mono shadow-slot cursor-pointer">
                     <option value="LFO1">LFO 1</option>
                     <option value="LFO2">LFO 2</option>
                     <option value="LFO3">LFO 3</option>
-                    <option value="XY1" selected>XY 1</option> <option value="XY2">XY 2</option>
+                    <option value="XY1" selected>XY 1</option>
+                    <option value="XY2">XY 2</option>
                     <option value="XY3">XY 3</option>
                 </select>
             </div>
             <!-- LFO -->
             <div id="mod-hub-lfo-content" class="hidden flex-1 flex flex-col justify-between">
-                <div class="h-20 bg-zinc-900 shadow-slot rounded border border-zinc-700/70 p-1 mb-2 flex items-center justify-center relative overflow-hidden">
+                <div
+                    class="h-20 bg-zinc-900 shadow-slot rounded border border-zinc-700/70 p-1 mb-2 flex items-center justify-center relative overflow-hidden">
                     <svg class="w-full h-full stroke-audio-mod fill-none opacity-80" viewBox="0 0 100 40">
-                        <path d="M 0 20 C 25 0, 25 40, 50 20 C 75 0, 75 40, 100 20" stroke-width="1.2"/>
+                        <path d="M 0 20 C 25 0, 25 40, 50 20 C 75 0, 75 40, 100 20" stroke-width="1.2" />
                     </svg>
                 </div>
-                
+
                 <div class="space-y-2 text-[10px]">
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="text-zinc-400 block mb-0.5 font-medium">Amount</label>
-                            <input type="range" class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
+                            <input type="range"
+                                class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
                         </div>
                         <div>
                             <label class="text-zinc-400 block mb-0.5 font-medium">Offset</label>
-                            <input type="range" class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
+                            <input type="range"
+                                class="w-full h-1 bg-zinc-800 accent-audio-mod appearance-none rounded-full shadow-slot cursor-pointer">
                         </div>
                     </div>
                     <div>
-                        <label class="text-[9px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination</label>
-                        <select class="w-full bg-zinc-900 text-[10px] px-2 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
+                        <label
+                            class="text-[9px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination</label>
+                        <select
+                            class="w-full bg-zinc-900 text-[10px] px-2 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
                             <option>Target -> Base -> Density</option>
                             <option>Target -> Base -> Brightness</option>
                             <option>Target -> Base -> Gain</option>
@@ -283,7 +389,8 @@
             </div>
             <!-- Quadratisches XY-Pad -->
             <div id="mod-hub-xy-content" class="flex-1 flex flex-col justify-between">
-                <div class="w-32 h-32 mx-auto bg-zinc-950/60 shadow-slot rounded border border-zinc-700/70 p-1 mb-2 relative overflow-hidden flex items-center justify-center shrink-0">
+                <div
+                    class="w-32 h-32 mx-auto bg-zinc-950/60 shadow-slot rounded border border-zinc-700/70 p-1 mb-2 relative overflow-hidden flex items-center justify-center shrink-0">
                     <div class="absolute inset-0 grid grid-cols-4 grid-rows-4 pointer-events-none opacity-10">
                         <div class="border-b border-r border-zinc-400 border-dashed"></div>
                         <div class="border-b border-r border-zinc-400 border-dashed"></div>
@@ -304,18 +411,26 @@
                     </div>
                     <div class="absolute w-full h-[1px] bg-zinc-800/80 top-1/2 left-0"></div>
                     <div class="absolute h-full w-[1px] bg-zinc-800/80 left-1/2 top-0"></div>
-                    
-                    <div class="absolute left-[65%] top-[35%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-zinc-900 border-2 border-audio-mod shadow-[0_0_10px_#E0A96D] cursor-pointer flex items-center justify-center group/puck">
-                        <div class="w-1 h-1 rounded-full bg-audio-mod opacity-60 group-hover/puck:opacity-100 transition-opacity"></div>
+
+                    <div
+                        class="absolute left-[65%] top-[35%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-zinc-900 border-2 border-audio-mod shadow-[0_0_10px_#E0A96D] cursor-pointer flex items-center justify-center group/puck">
+                        <div
+                            class="w-1 h-1 rounded-full bg-audio-mod opacity-60 group-hover/puck:opacity-100 transition-opacity">
+                        </div>
                     </div>
-                    <span class="absolute bottom-1 right-1.5 text-[7px] font-mono text-zinc-600 uppercase tracking-widest">X / Y</span>
+                    <span
+                        class="absolute bottom-1 right-1.5 text-[7px] font-mono text-zinc-600 uppercase tracking-widest">X
+                        / Y</span>
                 </div>
 
                 <div class="space-y-1.5 text-[10px]">
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="text-[8px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination X</label>
-                            <select class="w-full bg-zinc-900 text-[9px] px-1.5 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
+                            <label
+                                class="text-[8px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination
+                                X</label>
+                            <select
+                                class="w-full bg-zinc-900 text-[9px] px-1.5 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
                                 <option selected>Base -> Density</option>
                                 <option>Base -> Brightness</option>
                                 <option>Base -> Gain</option>
@@ -323,8 +438,11 @@
                             </select>
                         </div>
                         <div>
-                            <label class="text-[8px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination Y</label>
-                            <select class="w-full bg-zinc-900 text-[9px] px-1.5 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
+                            <label
+                                class="text-[8px] font-bold text-audio-mod block mb-0.5 uppercase tracking-wider">Destination
+                                Y</label>
+                            <select
+                                class="w-full bg-zinc-900 text-[9px] px-1.5 py-1 rounded border border-zinc-700 text-zinc-200 shadow-slot cursor-pointer">
                                 <option>Base -> Density</option>
                                 <option>Base -> Brightness</option>
                                 <option>Base -> Gain</option>
@@ -341,63 +459,85 @@
         <!--FX-Rack-->
         <div class="flex-1 flex gap-2 p-2 overflow-x-auto no-scrollbar bg-zinc-900" id="fx-rack-lane">
             <!-- Core-FX: Grundparameter des selektierten Objektes -->
-           <div class="w-40 h-full bg-zinc-800/80 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit">
-                <div class="h-6 bg-zinc-700/90 border-b border-zinc-800 px-2 flex items-center justify-between rounded-t-lg">
+            <div
+                class="w-40 h-full bg-zinc-800/80 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit">
+                <div
+                    class="h-6 bg-zinc-700/90 border-b border-zinc-800 px-2 flex items-center justify-between rounded-t-lg">
                     <div class="flex items-center gap-1.5">
                         <div class="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_4px_rgba(168,85,247,0.6)]"></div>
-                        <span class="text-[10px] font-bold tracking-wider uppercase text-zinc-200">Base Parameters</span>
+                        <span class="text-[10px] font-bold tracking-wider uppercase text-zinc-200">Base
+                            Parameters</span>
                     </div>
                     <span class="text-[8px] font-mono text-zinc-500">CORE</span>
                 </div>
-                
+
                 <div class="flex-1 grid grid-cols-2 gap-x-2 gap-y-1.5 p-2 items-center justify-items-center">
-                    
+
                     <div class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center relative">
-                            <div class="w-9 h-9 rounded-full knob-gradient shadow-knob-selected border border-purple-500 flex items-center justify-center relative">
-                                <div class="w-0.5 h-2.5 bg-purple-300 absolute top-0.5 rounded-full origin-bottom transform rotate-[-45deg]"></div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center relative">
+                            <div
+                                class="w-9 h-9 rounded-full knob-gradient shadow-knob-selected border border-purple-500 flex items-center justify-center relative">
+                                <div
+                                    class="w-0.5 h-2.5 bg-purple-300 absolute top-0.5 rounded-full origin-bottom transform rotate-[-45deg]">
+                                </div>
                             </div>
                         </div>
-                        <span class="text-[9px] font-bold text-audio-timeline mt-0.5 group-hover:text-purple-300 transition-colors">Density</span>
+                        <span
+                            class="text-[9px] font-bold text-audio-timeline mt-0.5 group-hover:text-purple-300 transition-colors">Density</span>
                     </div>
 
                     <div class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative group-hover:border-zinc-500 transition-colors">
+                        <div
+                            class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-9 h-9 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative group-hover:border-zinc-500 transition-colors">
                                 <div class="w-0.5 h-2.5 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom"></div>
                             </div>
                         </div>
-                        <span class="text-[9px] font-semibold text-zinc-300 mt-0.5 group-hover:text-zinc-100 transition-colors">Bright</span>
+                        <span
+                            class="text-[9px] font-semibold text-zinc-300 mt-0.5 group-hover:text-zinc-100 transition-colors">Bright</span>
                     </div>
 
                     <div class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative group-hover:border-zinc-500 transition-colors">
-                                <div class="w-0.5 h-2.5 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-12"></div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-9 h-9 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative group-hover:border-zinc-500 transition-colors">
+                                <div
+                                    class="w-0.5 h-2.5 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-12">
+                                </div>
                             </div>
                         </div>
-                        <span class="text-[9px] font-semibold text-zinc-300 mt-0.5 group-hover:text-zinc-100 transition-colors">Gain</span>
+                        <span
+                            class="text-[9px] font-semibold text-zinc-300 mt-0.5 group-hover:text-zinc-100 transition-colors">Gain</span>
                     </div>
 
                     <div class="flex flex-col items-center cursor-pointer group">
-                        <div class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-9 h-9 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative group-hover:border-zinc-500 transition-colors">
+                        <div
+                            class="w-10 h-10 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-9 h-9 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative group-hover:border-zinc-500 transition-colors">
                                 <div class="w-0.5 h-2.5 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom"></div>
                             </div>
                         </div>
-                        <span class="text-[9px] font-semibold text-zinc-300 mt-0.5 group-hover:text-zinc-100 transition-colors">Pitch</span>
+                        <span
+                            class="text-[9px] font-semibold text-zinc-300 mt-0.5 group-hover:text-zinc-100 transition-colors">Pitch</span>
                     </div>
 
                 </div>
             </div>
 
             <!-- Effektmodul: Spectral Delay -->
-            <div class="w-44 h-full bg-zinc-800/60 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit border-l-2 border-l-emerald-500">
-                <div class="h-6 bg-emerald-950/30 border-b border-zinc-800/70 px-2 flex items-center justify-between rounded-t-lg">
+            <div
+                class="w-44 h-full bg-zinc-800/60 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit border-l-2 border-l-emerald-500">
+                <div
+                    class="h-6 bg-emerald-950/30 border-b border-zinc-800/70 px-2 flex items-center justify-between rounded-t-lg">
                     <div class="flex items-center gap-1.5">
                         <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
-                
-                        <span class="text-[10px] font-bold tracking-wider uppercase text-emerald-400">Spectral Delay</span>
+
+                        <span class="text-[10px] font-bold tracking-wider uppercase text-emerald-400">Spectral
+                            Delay</span>
                     </div>
                     <div class="flex items-center gap-1.5 text-[9px]">
                         <span class="text-zinc-500 hover:text-red-400 cursor-pointer">✕</span>
@@ -405,16 +545,22 @@
                 </div>
                 <div class="flex-1 flex items-center justify-around p-2">
                     <div class="flex flex-col items-center">
-                        <div class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
-                                <div class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-45"></div>
+                        <div
+                            class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
+                                <div
+                                    class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-45">
+                                </div>
                             </div>
                         </div>
                         <span class="text-[9px] text-zinc-400 mt-1">Time</span>
                     </div>
                     <div class="flex flex-col items-center">
-                        <div class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
+                        <div
+                            class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative">
                                 <div class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom"></div>
                             </div>
                         </div>
@@ -424,29 +570,39 @@
             </div>
 
             <!-- Effektmodul: Space Blur -->
-            <div class="w-44 h-full bg-zinc-800/60 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit border-l-2 border-l-sky-500">
-                <div class="h-6 bg-sky-950/20 border-b border-zinc-800/70 px-2 flex items-center justify-between rounded-t-lg">
+            <div
+                class="w-44 h-full bg-zinc-800/60 border border-zinc-700 rounded-lg flex flex-col shrink-0 shadow-rack-unit border-l-2 border-l-sky-500">
+                <div
+                    class="h-6 bg-sky-950/20 border-b border-zinc-800/70 px-2 flex items-center justify-between rounded-t-lg">
                     <div class="flex items-center gap-1.5">
                         <div class="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_4px_rgba(56,189,248,0.6)]"></div>
                         <span class="text-[10px] font-bold tracking-wider uppercase text-sky-400">Space Blur</span>
                     </div>
                     <span class="text-zinc-500 hover:text-red-400 cursor-pointer text-[9px]">✕</span>
                 </div>
-                
+
                 <div class="flex-1 flex items-center justify-around p-2">
                     <div class="flex flex-col items-center">
-                        <div class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
-                                <div class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-[-20deg]"></div>
+                        <div
+                            class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
+                                <div
+                                    class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-[-20deg]">
+                                </div>
                             </div>
                         </div>
                         <span class="text-[9px] text-zinc-400 mt-1">Size</span>
                     </div>
-                    
+
                     <div class="flex flex-col items-center">
-                        <div class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
-                            <div class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
-                                <div class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-90"></div>
+                        <div
+                            class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-8 h-8 rounded-full knob-gradient shadow-knob border border-zinc-600 flex items-center justify-center relative cursor-pointer hover:border-zinc-500 transition-colors">
+                                <div
+                                    class="w-0.5 h-2 bg-zinc-300 absolute top-0.5 rounded-full origin-bottom transform rotate-90">
+                                </div>
                             </div>
                         </div>
                         <span class="text-[9px] text-zinc-400 mt-1">Mix</span>
@@ -454,143 +610,191 @@
                 </div>
             </div>
 
-            <!-- Neuer Effekt wird an die Rack-Kette angehängt -->    
-            <div id="add-fx-btn" class="w-24 h-full border border-dashed border-zinc-700 rounded-lg flex flex-col items-center justify-center shrink-0 hover:border-zinc-600 hover:bg-zinc-800/20 transition-all duration-200 cursor-pointer bg-zinc-800/30 group">               
-                <span class="text-2xl text-zinc-500 group-hover:text-zinc-300 group-hover:scale-110 transition-transform">+</span>
-                <span class="text-[9px] font-bold uppercase tracking-wider text-zinc-500 group-hover:text-zinc-300 mt-1">Add FX</span>
+            <!-- Neuer Effekt wird an die Rack-Kette angehängt -->
+            <div id="add-fx-btn"
+                class="w-24 h-full border border-dashed border-zinc-700 rounded-lg flex flex-col items-center justify-center shrink-0 hover:border-zinc-600 hover:bg-zinc-800/20 transition-all duration-200 cursor-pointer bg-zinc-800/30 group">
+                <span
+                    class="text-2xl text-zinc-500 group-hover:text-zinc-300 group-hover:scale-110 transition-transform">+</span>
+                <span
+                    class="text-[9px] font-bold uppercase tracking-wider text-zinc-500 group-hover:text-zinc-300 mt-1">Add
+                    FX</span>
             </div>
 
         </div>
     </footer>
 
-<!-- FX Window Overlay: hidden -->    
-<div id="fx-browser-overlay" class="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-all duration-300">
-        
-        <div class="w-full max-w-3xl bg-zinc-900 border border-zinc-700 shadow-2xl rounded-xl flex flex-col overflow-hidden max-h-[85vh]">
-            
+    <!-- FX Window Overlay: hidden -->
+    <div id="fx-browser-overlay"
+        class="fixed inset-0 bg-zinc-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden transition-all duration-300">
+
+        <div
+            class="w-full max-w-3xl bg-zinc-900 border border-zinc-700 shadow-2xl rounded-xl flex flex-col overflow-hidden max-h-[85vh]">
+
             <div class="h-10 bg-zinc-800/90 border-b border-zinc-950 px-4 flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="text-[11px] font-mono tracking-widest uppercase text-zinc-500">Routing</span>
-                    <span class="text-xs font-bold tracking-wider text-zinc-200 uppercase">Load Spectral FX Processor</span>
+                    <span class="text-xs font-bold tracking-wider text-zinc-200 uppercase">Load Spectral FX
+                        Processor</span>
                 </div>
-                <button id="close-fx-btn" class="text-zinc-500 hover:text-zinc-200 text-sm font-mono tracking-tighter px-2 py-0.5 rounded border border-transparent hover:border-zinc-700 hover:bg-zinc-800 transition-all">
+                <button id="close-fx-btn"
+                    class="text-zinc-500 hover:text-zinc-200 text-sm font-mono tracking-tighter px-2 py-0.5 rounded border border-transparent hover:border-zinc-700 hover:bg-zinc-800 transition-all">
                     [ESC] CLOSE
                 </button>
             </div>
 
             <div class="flex-1 p-4 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 bg-zinc-900/50">
-                
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-spaceBlur/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-spaceBlur/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-spaceBlur transition-colors">Space Blur</span>
+                        <span
+                            class="font-bold text-sm text-zinc-200 group-hover:text-fx-spaceBlur transition-colors">Space
+                            Blur</span>
                         <div class="w-2 h-2 rounded-full bg-fx-spaceBlur shadow-[0_0_6px_#0EA5E9] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Space & Depth</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Atmosphärischer Spektral-Reverb für unendliche, dichte Klangwolken.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Atmosphärischer Spektral-Reverb für unendliche,
+                        dichte Klangwolken.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-delay/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-delay/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-delay transition-colors">Echo Bleed</span>
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-delay transition-colors">Echo
+                            Bleed</span>
                         <div class="w-2 h-2 rounded-full bg-fx-delay shadow-[0_0_6px_#10B981] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Time-Domain</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Flüssiges Tape-Echo, das Frequenzen sanft ineinander verschmiert.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Flüssiges Tape-Echo, das Frequenzen sanft
+                        ineinander verschmiert.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-filter/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-filter/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-filter transition-colors">Shade Contour</span>
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-filter transition-colors">Shade
+                            Contour</span>
                         <div class="w-2 h-2 rounded-full bg-fx-filter shadow-[0_0_6px_#F59E0B] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Tone Filter</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Warmer, analog-modellierter Filter zur plastischen Frequenz-Formung.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Warmer, analog-modellierter Filter zur
+                        plastischen Frequenz-Formung.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-compressor/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-compressor/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-compressor transition-colors">Mass Forge</span>
+                        <span
+                            class="font-bold text-sm text-zinc-200 group-hover:text-fx-compressor transition-colors">Mass
+                            Forge</span>
                         <div class="w-2 h-2 rounded-full bg-fx-compressor shadow-[0_0_6px_#3B82F6] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Dynamics</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Adaptiver Dynamik-Compander, der dem Signal physisches Gewicht verleiht.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Adaptiver Dynamik-Compander, der dem Signal
+                        physisches Gewicht verleiht.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-saturation/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-saturation/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-saturation transition-colors">Heat Glow</span>
+                        <span
+                            class="font-bold text-sm text-zinc-200 group-hover:text-fx-saturation transition-colors">Heat
+                            Glow</span>
                         <div class="w-2 h-2 rounded-full bg-fx-saturation shadow-[0_0_6px_#F97316] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Harmonics</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Sättigungs-Schmiede für Röhrenwärme und harmonischen Oberton-Glow.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Sättigungs-Schmiede für Röhrenwärme und
+                        harmonischen Oberton-Glow.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-distortion/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-distortion/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-distortion transition-colors">Grit Edge</span>
+                        <span
+                            class="font-bold text-sm text-zinc-200 group-hover:text-fx-distortion transition-colors">Grit
+                            Edge</span>
                         <div class="w-2 h-2 rounded-full bg-fx-distortion shadow-[0_0_6px_#F43F5E] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Destruction</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Aggressives Hard-Clipping und mathematische Wavefolding-Zerstörung.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Aggressives Hard-Clipping und mathematische
+                        Wavefolding-Zerstörung.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-contrast/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-contrast/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-contrast transition-colors">Prism Focus</span>
+                        <span
+                            class="font-bold text-sm text-zinc-200 group-hover:text-fx-contrast transition-colors">Prism
+                            Focus</span>
                         <div class="w-2 h-2 rounded-full bg-fx-contrast shadow-[0_0_6px_#D946EF] mt-1"></div>
                     </div>
-                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Spectral Dynamics</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Regelt den spektralen Kontrast über die Frequenzbins (Scharfzeichner).</p>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Spectral
+                        Dynamics</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Regelt den spektralen Kontrast über die
+                        Frequenzbins (Scharfzeichner).</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-freeze/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-freeze/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-freeze transition-colors">Stasis Cloud</span>
+                        <span
+                            class="font-bold text-sm text-zinc-200 group-hover:text-fx-freeze transition-colors">Stasis
+                            Cloud</span>
                         <div class="w-2 h-2 rounded-full bg-fx-freeze shadow-[0_0_6px_#06B6D4] mt-1"></div>
                     </div>
-                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Spectral Freeze</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Friert das Spektrum in Zeitschleife ein. Erzeugt unendliche Flächen.</p>
+                    <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Spectral
+                        Freeze</span>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Friert das Spektrum in Zeitschleife ein.
+                        Erzeugt unendliche Flächen.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-perlin/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-perlin/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-perlin transition-colors">Fluid Grain</span>
+                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-perlin transition-colors">Fluid
+                            Grain</span>
                         <div class="w-2 h-2 rounded-full bg-fx-perlin shadow-[0_0_6px_#84CC16] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Noise Gen</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Mathematisch fließendes Perlin-Rauschen für organische Texturen.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Mathematisch fließendes Perlin-Rauschen für
+                        organische Texturen.</p>
                 </div>
 
-                <div class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-brownian/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
+                <div
+                    class="bg-zinc-950/40 border border-zinc-800 hover:border-fx-brownian/50 p-3 rounded-lg flex flex-col justify-between cursor-pointer group transition-all duration-200 hover:-translate-y-0.5 shadow-md">
                     <div class="flex items-start justify-between gap-2 mb-1">
-                        <span class="font-bold text-sm text-zinc-200 group-hover:text-fx-brownian transition-colors">Chaos Float</span>
+                        <span
+                            class="font-bold text-sm text-zinc-200 group-hover:text-fx-brownian transition-colors">Chaos
+                            Float</span>
                         <div class="w-2 h-2 rounded-full bg-fx-brownian shadow-[0_0_6px_#8B5CF6] mt-1"></div>
                     </div>
                     <span class="text-[9px] font-mono uppercase text-zinc-500 tracking-wider mb-2">Noise Gen</span>
-                    <p class="text-[10px] text-zinc-400 leading-relaxed">Unberechenbare Brown'sche Molekularbewegung für tiefe Drift-Rauschpfade.</p>
+                    <p class="text-[10px] text-zinc-400 leading-relaxed">Unberechenbare Brown'sche Molekularbewegung für
+                        tiefe Drift-Rauschpfade.</p>
                 </div>
 
             </div>
-            
+
             <div class="h-6 bg-zinc-950 border-t border-zinc-800 px-4 flex items-center justify-between">
-                <span class="text-[9px] font-mono text-zinc-600">Tip: Click an effect card to instantiate it into the next free rack slot.</span>
+                <span class="text-[9px] font-mono text-zinc-600">Tip: Click an effect card to instantiate it into the
+                    next free rack slot.</span>
                 <span class="text-[9px] font-mono text-zinc-600">v1.0.0 Alpha</span>
             </div>
         </div>
     </div>
     <script src="app.js"></script>
-        <script>
-            document.getElementById('mod-hub-selector').addEventListener('change', function(e) {
-                const isXY = e.target.value.startsWith('XY');
-                document.getElementById('mod-hub-lfo-content').classList.toggle('hidden', isXY);
-                document.getElementById('mod-hub-xy-content').classList.toggle('hidden', !isXY);
-            });
-            // Initialer Trigger beim Laden, um die Standardauswahl (XY 1) direkt zu forcieren
-            document.getElementById('mod-hub-selector').dispatchEvent(new Event('change'));
-        </script>
+    <script>
+        document.getElementById('mod-hub-selector').addEventListener('change', function (e) {
+            const isXY = e.target.value.startsWith('XY');
+            document.getElementById('mod-hub-lfo-content').classList.toggle('hidden', isXY);
+            document.getElementById('mod-hub-xy-content').classList.toggle('hidden', !isXY);
+        });
+        // Initialer Trigger beim Laden, um die Standardauswahl (XY 1) direkt zu forcieren
+        document.getElementById('mod-hub-selector').dispatchEvent(new Event('change'));
+    </script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
             const openBrowserBtn = document.getElementById('add-fx-btn');
             const closeBrowserBtn = document.getElementById('close-fx-btn');
             const fxOverlay = document.getElementById('fx-browser-overlay');
@@ -622,38 +826,39 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && fxOverlay && !fxOverlay.classList.contains('hidden')) {
                     fxOverlay.classList.add('hidden');
-                    }
-                });
+                }
             });
-        </script>
+        });
+    </script>
 
-        <script>
-            // --- ADD-OBJECT DROPDOWN LOGIK ---
-            const objectBtn = document.getElementById('add-object-btn');
-            const objectDropdown = document.getElementById('add-object-dropdown');
+    <script>
+        // --- ADD-OBJECT DROPDOWN LOGIK ---
+        const objectBtn = document.getElementById('add-object-btn');
+        const objectDropdown = document.getElementById('add-object-dropdown');
 
-            if (objectBtn && objectDropdown) {
-                // Dropdown umschalten (Toggle) bei Klick auf das Plus
-                objectBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Verhindert, dass der Click-Outside Event sofort triggert
-                    objectDropdown.classList.toggle('hidden');
-                });
+        if (objectBtn && objectDropdown) {
+            // Dropdown umschalten (Toggle) bei Klick auf das Plus
+            objectBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Verhindert, dass der Click-Outside Event sofort triggert
+                objectDropdown.classList.toggle('hidden');
+            });
 
-                // Komfort-Feature: Schließen, wenn man irgendwo außerhalb des Dropdowns klickt
-                document.addEventListener('click', (e) => {
-                    if (!objectDropdown.contains(e.target) && e.target !== objectBtn) {
-                        objectDropdown.classList.add('hidden');
-                    }
-                });
+            // Komfort-Feature: Schließen, wenn man irgendwo außerhalb des Dropdowns klickt
+            document.addEventListener('click', (e) => {
+                if (!objectDropdown.contains(e.target) && e.target !== objectBtn) {
+                    objectDropdown.classList.add('hidden');
+                }
+            });
 
-                // Komfort-Feature: Schließen bei ESC
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape') {
-                        objectDropdown.classList.add('hidden');
-                    }
-                });
-            }
-        </script>
-        
+            // Komfort-Feature: Schließen bei ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    objectDropdown.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+
 </body>
+
 </html>
