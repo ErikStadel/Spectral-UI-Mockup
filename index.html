@@ -79,7 +79,50 @@
                     <!-- Auto-Erkennung neuer Masken / Objekte -->
                     <button id="auto-detect-btn" class="px-2 h-6 bg-zinc-700 hover:bg-zinc-600 shadow-knob border border-zinc-600 text-[10px] font-semibold rounded text-zinc-200 transition-all">Auto-Detect</button>
                     <!-- Manuelles Hinzufügen eines neuen Objektes -->
-                    <button id="add-object-btn" class="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 shadow-knob border border-zinc-600 rounded flex items-center justify-center text-xs font-bold text-zinc-200 transition-all">+</button>
+                    <div class="relative inline-block text-left">
+                    <button id="add-object-btn" class="w-6 h-6 bg-zinc-700 hover:bg-zinc-600 shadow-knob border border-zinc-600 rounded flex items-center justify-center text-xs font-bold text-zinc-200 transition-all focus:outline-none">
+                        +
+                    </button>
+
+                    <div id="add-object-dropdown" class="absolute left-0 mt-1.5 w-44 rounded bg-zinc-800 border border-zinc-700 shadow-2xl py-1 z-40 hidden origin-top-left transition-all duration-100">
+                        
+                        <div class="px-2.5 py-1 text-[9px] font-mono tracking-widest uppercase text-zinc-500 select-none">
+                            Transform
+                        </div>
+                        
+                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors"></div>
+                            Wavetable: Sine
+                        </button>
+                        
+                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors"></div>
+                            Wavetable: Saw
+                        </button>
+                        
+                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-mod transition-colors"></div>
+                            Wavetable: Square
+                        </button>
+                        
+                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-400 italic hover:bg-zinc-700/60 hover:text-zinc-100 border-t border-zinc-700/40 mt-0.5 pt-1.5 transition-colors flex items-center gap-1.5">
+                            <span class="text-xs font-sans not-italic text-zinc-500">📁</span>
+                            Load Source...
+                        </button>
+
+                        <div class="border-t border-zinc-700/60 my-1"></div>
+
+                        <div class="px-2.5 py-1 text-[9px] font-mono tracking-widest uppercase text-zinc-500 select-none">
+                            Transient
+                        </div>
+                        
+                        <button class="w-full text-left px-3 py-1 text-[11px] text-zinc-300 hover:bg-zinc-700/60 hover:text-zinc-100 transition-colors flex items-center gap-1.5 group">
+                            <div class="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-audio-transient transition-colors"></div>
+                            Transient Object
+                        </button>
+                        
+                    </div>
+            </div>
                 </div>
             </div>
             
