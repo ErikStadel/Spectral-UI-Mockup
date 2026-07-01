@@ -579,7 +579,7 @@
         </div>
     </div>
     <script src="app.js"></script>
-            <script>
+        <script>
             document.getElementById('mod-hub-selector').addEventListener('change', function(e) {
                 const isXY = e.target.value.startsWith('XY');
                 document.getElementById('mod-hub-lfo-content').classList.toggle('hidden', isXY);
@@ -590,7 +590,7 @@
         </script>
 
         <script>
-        document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('DOMContentLoaded', () => {
             const openBrowserBtn = document.getElementById('add-fx-btn');
             const closeBrowserBtn = document.getElementById('close-fx-btn');
             const fxOverlay = document.getElementById('fx-browser-overlay');
@@ -622,9 +622,38 @@
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && fxOverlay && !fxOverlay.classList.contains('hidden')) {
                     fxOverlay.classList.add('hidden');
-                }
+                    }
+                });
             });
-        });
-    </script>
+        </script>
+
+        <script>
+            // --- ADD-OBJECT DROPDOWN LOGIK ---
+            const objectBtn = document.getElementById('add-object-btn');
+            const objectDropdown = document.getElementById('add-object-dropdown');
+
+            if (objectBtn && objectDropdown) {
+                // Dropdown umschalten (Toggle) bei Klick auf das Plus
+                objectBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Verhindert, dass der Click-Outside Event sofort triggert
+                    objectDropdown.classList.toggle('hidden');
+                });
+
+                // Komfort-Feature: Schließen, wenn man irgendwo außerhalb des Dropdowns klickt
+                document.addEventListener('click', (e) => {
+                    if (!objectDropdown.contains(e.target) && e.target !== objectBtn) {
+                        objectDropdown.classList.add('hidden');
+                    }
+                });
+
+                // Komfort-Feature: Schließen bei ESC
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        objectDropdown.classList.add('hidden');
+                    }
+                });
+            }
+        </script>
+        
 </body>
 </html>
