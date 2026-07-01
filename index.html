@@ -162,7 +162,7 @@
             <div class="flex-1 overflow-y-auto p-3 space-y-2.5">
                 <!-- Objektkarte: Aktives Transienten-Objekt -->
                 <div
-                    class="p-3 rounded-lg bg-zinc-800 border border-zinc-700 shadow-lg flex flex-col gap-2.5 ring-1 ring-audio-mod/30 w-72 shrink-0">
+                    class="p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity w-40 shrink-0 ring-1 ring-audio-mod/20">
 
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
@@ -173,45 +173,35 @@
                         <span class="text-[9px] font-mono text-zinc-400">ID: #01</span>
                     </div>
 
-                    <div class="flex flex-row items-end gap-3 justify-between">
+                    <div class="flex flex-col items-center justify-center my-1 py-1">
+                        <span class="text-[8px] font-mono uppercase tracking-widest text-zinc-500 mb-2">Threshold</span>
 
-                        <div class="flex flex-col gap-1.5 shrink-0">
-                            <div class="flex gap-1">
-                                <button
-                                    class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-cyan-900/50 bg-cyan-950/40 text-cyan-400 shadow-btn-active focus:outline-none">Eng</button>
-                                <button
-                                    class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob focus:outline-none">Rec</button>
-                            </div>
-                            <div class="flex gap-1">
-                                <button
-                                    class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-tonal transition-colors focus:outline-none">S</button>
-                                <button
-                                    class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-transient transition-colors focus:outline-none">M</button>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col gap-1.5 flex-1 items-end">
-                            <span
-                                class="text-[8px] font-mono uppercase tracking-widest text-zinc-500 mr-2">Threshold</span>
-
-                            <div class="flex flex-row items-center gap-2">
+                        <div
+                            class="w-11 h-11 rounded-full bg-zinc-950 shadow-slot p-0.5 flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 rounded-full bg-gradient-to-b from-zinc-700 to-zinc-800 shadow-knob border border-zinc-650 flex items-center justify-center relative cursor-pointer group hover:border-zinc-500 transition-colors">
                                 <div
-                                    class="w-10 h-10 rounded-full bg-zinc-950 shadow-slot p-0.5 flex items-center justify-center shrink-0">
-                                    <div
-                                        class="w-9 h-9 rounded-full bg-gradient-to-b from-zinc-700 to-zinc-800 shadow-knob border border-zinc-650 flex items-center justify-center relative cursor-pointer group hover:border-zinc-500 transition-colors">
-                                        <div
-                                            class="w-0.5 h-2 bg-audio-transient absolute top-0.5 rounded-full origin-bottom transform rotate-[-35deg] shadow-[0_0_3px_rgba(255,82,82,0.6)]">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="w-16">
-                                    <input type="text" value="-12.4 dB"
-                                        class="w-full h-4 bg-zinc-950 border border-zinc-900 focus:border-audio-transient/50 focus:outline-none rounded text-center font-mono text-[9px] text-audio-transient font-bold tracking-wider shadow-inner select-all cursor-text transition-colors" />
+                                    class="w-0.5 h-2 bg-audio-transient absolute top-0.5 rounded-full origin-bottom transform rotate-[-35deg] shadow-[0_0_3px_rgba(255,82,82,0.6)]">
                                 </div>
                             </div>
                         </div>
 
+                        <div class="w-16 mt-2">
+                            <input type="text" value="-12.4 dB"
+                                class="w-full h-4 bg-zinc-950 border border-zinc-900 focus:border-audio-transient/50 focus:outline-none rounded text-center font-mono text-[9px] text-audio-transient font-bold tracking-wider shadow-inner select-all cursor-text transition-colors" />
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-1 mt-0.5">
+                        <button
+                            class="px-2.5 py-1 text-[9px] font-bold uppercase rounded border border-cyan-900/50 bg-cyan-950/40 text-cyan-400 shadow-btn-active focus:outline-none">Eng</button>
+
+                        <div class="flex gap-1">
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-tonal transition-colors focus:outline-none">S</button>
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400 hover:text-audio-transient transition-colors focus:outline-none">M</button>
+                        </div>
                     </div>
                 </div>
 
