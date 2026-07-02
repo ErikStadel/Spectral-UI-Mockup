@@ -15,6 +15,9 @@
                         audio: {
                             transient: '#FF5252',
                             noise: '#4FD16A',
+                            brush: '#65004c',
+                            tonal: '#4AA3FF',
+                            rect: '#002cb0',
                             mod: '#E0A96D',       // Amber für Mod Hub (Jetzt globaler Standard für Slider)
                             timeline: '#A78BFA',  // Purple für Story Timeline
                             rackBase: '#27272a',   // Zinc 700 für das Hauptgehäuse
@@ -205,13 +208,13 @@
                     </div>
                 </div>
 
-                <!-- Objektkarte: Inaktives Tonal Bed-Objekt -->
+                <!-- Objektkarte: Inaktives Tonal-Objekt -->
                 <div
                     class="p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2">
                             <div class="w-2 h-2 rounded-full bg-audio-tonal"></div>
-                            <span class="text-xs font-bold text-zinc-300">Tonal Bed</span>
+                            <span class="text-xs font-bold text-zinc-300">Tonal</span>
                         </div>
                         <span class="text-[9px] font-mono text-zinc-500">ID: #02</span>
                     </div>
@@ -222,6 +225,55 @@
                                 class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Eng</button>
                             <button
                                 class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Rec</button>
+                        </div>
+                        <div class="flex gap-1">
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">S</button>
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">M</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Objektkarte: Inaktives Brush-Objekt -->
+                <div
+                    class="p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-audio-brush"></div>
+                            <span class="text-xs font-bold text-zinc-300">Brush</span>
+                        </div>
+                        <span class="text-[9px] font-mono text-zinc-500">ID: #03</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="flex gap-1">
+                            <!-- Engage / Aufnahme / FX Fokus -->
+                            <button
+                                class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Eng</button>
+                        </div>
+                        <div class="flex gap-1">
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">S</button>
+                            <button
+                                class="w-6 h-5 bg-zinc-900 shadow-slot rounded text-[10px] font-bold text-zinc-400">M</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objektkarte: Inaktives Rect-Objekt -->
+                <div
+                    class="p-3 rounded-lg bg-zinc-800/70 border border-zinc-700/80 shadow-md flex flex-col gap-2.5 opacity-60 hover:opacity-100 transition-opacity">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-audio-rect"></div>
+                            <span class="text-xs font-bold text-zinc-300">Object 236 Hz - 940 Hz</span>
+                        </div>
+                        <span class="text-[9px] font-mono text-zinc-500">ID: #04</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="flex gap-1">
+                            <!-- Engage / Aufnahme / FX Fokus -->
+                            <button
+                                class="px-2 py-1 text-[9px] font-bold uppercase rounded border border-zinc-700 bg-zinc-800 text-zinc-400 shadow-knob">Eng</button>
                         </div>
                         <div class="flex gap-1">
                             <button
