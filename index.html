@@ -36,17 +36,17 @@
                             brownian: '#8B5CF6'     // violet-500 (Tiefes, chaotisches Drift-Rauschen)
                         }
                         // Farbpalette für Spectrogramm
-                            //spectrogram:
-                            //silence/background: #000000 – #0B0B2E
-                            //Very Low Energy: #0B0B2E – #2B0A7A
-                            //Low Energy: #2B0A7A – #6A00A8
-                            //Mid Energy: #6A00A8 – #CE0E7A
-                            //High Energy: #CE0E7A – #FF2A00
-                            //Very High Energy: #FF2A00 – #FF6A00
-                            //Max Energy / Peaks / Transients: #FFC400 – #FFF4B0
-                            
+                        //spectrogram:
+                        //silence/background: #000000 – #0B0B2E
+                        //Very Low Energy: #0B0B2E – #2B0A7A
+                        //Low Energy: #2B0A7A – #6A00A8
+                        //Mid Energy: #6A00A8 – #CE0E7A
+                        //High Energy: #CE0E7A – #FF2A00
+                        //Very High Energy: #FF2A00 – #FF6A00
+                        //Max Energy / Peaks / Transients: #FFC400 – #FFF4B0
 
-                        
+
+
                     },
                     boxShadow: {
                         // Soft Audio UI / Dark Neumorphism Definitionen
@@ -101,10 +101,10 @@
 
     <div class="flex flex-1 min-h-0">
 
-        <!-- Objekt-Datenbank: Verwaltung aller spektralen Objekte -->
+        <!-- Obejct Sidebar: Verwaltung aller spektralen Objekte -->
         <aside class="w-80 border-r border-zinc-800 bg-zinc-800/60 flex flex-col shrink-0">
             <div class="p-3 border-b border-zinc-800 flex items-center justify-between">
-                <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Objekt-Datenbank</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Objects</span>
                 <div class="flex gap-1.5">
                     <!-- Auto-Erkennung neuer Masken / Objekte -->
                     <button id="auto-detect-btn"
@@ -623,7 +623,7 @@
                         <span class="text-zinc-500 hover:text-red-400 cursor-pointer">✕</span>
                     </div>
                 </div>
-                <div class="flex-1 flex items-center justify-around p-2">
+                <div class="flex-1 flex flex-col items-center justify-around p-2">
                     <div class="flex flex-col items-center">
                         <div
                             class="w-9 h-9 rounded-full bg-zinc-900 shadow-slot p-0.5 flex items-center justify-center">
